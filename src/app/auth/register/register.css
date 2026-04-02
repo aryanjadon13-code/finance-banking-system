@@ -1,0 +1,90 @@
+/* SAME BACKGROUND */
+.main-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to right, #2e4d3d, #1f2f2a);
+  padding: 30px;
+}
+
+/* CARD */
+.card {
+  display: flex;
+  width: 100%;
+  max-width: 1100px;
+  height: 600px;
+  background: #f5f5f5;
+  border-radius: 25px;
+  overflow: hidden;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+}
+
+/* LEFT IMAGE */
+.left-image {
+  width: 50%;
+  position: relative;
+  background: url('/register.jpg') no-repeat center/cover;
+  border-radius: 25px 0 0 25px;
+}
+
+/* DARK OVERLAY */
+.left-image::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.3);
+}
+
+/* TEXT ON IMAGE */
+.overlay {
+  position: absolute;
+  top: 40px;
+  left: 30px;
+  color: white;
+  width: 80%;
+}
+
+.overlay button {
+  margin-top: 10px;
+  padding: 10px 25px;
+  border-radius: 20px;
+  border: none;
+  background: rgba(128, 128, 128, 0.916);
+  cursor: pointer;
+}
+
+/* RIGHT FORM */
+.right-form {
+  width: 50%;
+  padding: 60px 50px;
+}
+
+.right-form label {
+  display: block;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.right-form input {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0 12px;
+}
+
+/* BUTTON */
+.signup-btn {
+  width: 100%;
+  padding: 10px;
+  background: #4b6f56;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  margin-top: 15px;
+}
+
+.note {
+  text-align: center;
+  font-size: 12px;
+  margin-top: 10px;
+}

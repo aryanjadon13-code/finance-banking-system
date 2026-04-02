@@ -1,0 +1,41 @@
+<div class="main-container">
+
+  <div class="card">
+
+    <!-- LEFT IMAGE -->
+    <div class="left-image">
+      <div class="overlay">
+        <h1>Hello Friends</h1>
+        <p>Enter your personal details and start journey with us</p>
+
+        <button routerLink="/login">Login</button>
+      </div>
+    </div>
+
+    <!-- RIGHT FORM -->
+    <div class="right-form">
+
+      <label>Name</label>
+      <input type="text" placeholder="Enter your name" [(ngModel)]="name">
+
+      <label>Email</label>
+      <input type="email" placeholder="Enter your email" [(ngModel)]="email">
+
+      <label>Phone Number</label>
+      <input type="text" placeholder="Enter your phone number" [(ngModel)]="phone">
+
+      <label>Password</label>
+      <input type="password" placeholder="Enter your password" [(ngModel)]="password">
+
+      <label>Confirm Password</label>
+      <input type="password" placeholder="Confirm password" [(ngModel)]="confirmPassword">
+
+      <button class="signup-btn" (click)="register()">Sign Up</button>
+
+      <p class="note">Or use your Email for Registration</p>
+
+    </div>
+
+  </div>
+
+</div>
