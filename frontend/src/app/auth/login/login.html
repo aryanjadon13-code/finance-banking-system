@@ -13,7 +13,9 @@
       <label>Password</label>
       <input type="password" [(ngModel)]="password" placeholder="Enter your password">
 
-      <p class="forgot"(click)="forgotPassword()">Forgot password?</p>
+      <p class="forgot" routerLink="/forgot-password">
+  Forgot password?
+</p>
 
       <div class="remember">
         <input type="checkbox" id="remember">
