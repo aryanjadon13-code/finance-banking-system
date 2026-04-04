@@ -1,0 +1,30 @@
+<div class="main-container">
+
+
+
+     <div class="left"></div>
+
+     <div class="otp-card">
+          <p class="small-title">OTP Verification</p>
+
+    <h2>Enter OTP</h2>
+
+    <p class="desc">
+      Enter the 6-digit code sent to your email
+    </p>
+
+    <div class="otp-box">
+      <input maxlength="1"[(ngModel)]="otp[0]">
+      <input maxlength="1"[(ngModel)]="otp[1]">
+      <input maxlength="1"[(ngModel)]="otp[2]">
+      <input maxlength="1"[(ngModel)]="otp[3]">
+      <input maxlength="1"[(ngModel)]="otp[4]">
+      <input maxlength="1"[(ngModel)]="otp[5]">
+    </div>
+
+    <button (click)="verifyOtp()">Verify</button>
+
+  </div>
+  <div class="design"></div>
+
+</div>verifyOtp

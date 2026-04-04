@@ -1,0 +1,80 @@
+.main-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #2e4d3d;
+}
+
+
+
+/* LEFT SIDE */
+.left {
+  width: 0%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* INNER OTP BOX */
+.otp-card {
+  width: 500px;
+  height: 300px;
+  padding: 25px;
+  background: #f5f5f5;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  text-align: center;
+}
+
+.small-title {
+  font-size: 13px;
+  margin-bottom: 5px;
+}
+
+.desc {
+  font-size: 12px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+/* OTP BOX */
+.otp-box {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.otp-box input {
+  width: 38px;
+  height: 38px;
+  text-align: center;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+/* RESEND */
+.resend {
+  font-size: 11px;
+  margin-bottom: 15px;
+  color: #666;
+}
+
+/* BUTTON */
+button {
+  width: 100%;
+  padding: 10px;
+  background: #0f5c3d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+/* RIGHT DESIGN */
+.right {
+  width: 50%;
+  background: linear-gradient(135deg, #2e7d5b, #66bb6a);
+  clip-path: polygon(30% 0%, 100% 0%, 100% 100%, 0% 100%);
+}

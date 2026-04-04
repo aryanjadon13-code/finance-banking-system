@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { log } from 'console';
 
 @Component({
   selector: 'app-forgot-password',
@@ -19,7 +20,8 @@ export class ForgotPassword {
       return;
     }
     alert('OTP sent to your email address');
-   this.router.navigate(['/verify-otp']);
+   console.log("clicked");
+  this.router.navigate(['/email-sent']);
   }
 
 }
