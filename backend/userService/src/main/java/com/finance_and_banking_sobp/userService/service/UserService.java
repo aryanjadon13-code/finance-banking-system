@@ -1,15 +1,15 @@
 package com.finance_and_banking_sobp.userService.service;
 
-import com.finance_and_banking_sobp.userService.dto.LoginRequest;
-import com.finance_and_banking_sobp.userService.dto.LoginResponse;
-import com.finance_and_banking_sobp.userService.dto.RegisterRequest;
-import com.finance_and_banking_sobp.userService.dto.UserResponse;
+import com.finance_and_banking_sobp.userService.dto.*;
 import com.finance_and_banking_sobp.userService.entity.UserEntity;
 import com.finance_and_banking_sobp.userService.repository.UserRepo;
 import com.finance_and_banking_sobp.userService.security.JwtUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -19,12 +19,12 @@ public class UserService {
     private BCryptPasswordEncoder passwordEncoder;
     private JwtUtil jwtUtil;
 
-    public UserResponse register(RegisterRequest registerRequest){
+    public UserResponse register(RegisterRequest registerRequest) {
 
-        if (userRepo.findByEmail(registerRequest.getEmail()).isPresent()){
-            throw  new RuntimeException("email already exists");
+        if (userRepo.findByEmail(registerRequest.getEmail()).isPresent()) {
+            throw new RuntimeException("email already exists");
         }
-        UserEntity userEntity=new UserEntity();
+        UserEntity userEntity = new UserEntity();
         userEntity.setName(registerRequest.getName());
         userEntity.setEmail(registerRequest.getEmail());
         userEntity.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
@@ -41,10 +41,11 @@ public class UserService {
                 savedUser.getCreatedAt()
         );
     }
-    public LoginResponse login (LoginRequest request){
+
+    public LoginResponse login(LoginRequest request) {
         UserEntity user = userRepo.findByEmail(request.getEmail()).orElseThrow(() -> new RuntimeException("user not found"));
 
-        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())){
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new RuntimeException("invalid password");
         }
 

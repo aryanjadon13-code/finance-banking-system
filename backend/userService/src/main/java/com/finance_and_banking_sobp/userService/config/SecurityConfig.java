@@ -21,7 +21,13 @@ public class SecurityConfig {
         return http
                 .csrf(csrf -> csrf.disable()) // disable csrf for APIs
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/users/register","/api/users/login").permitAll() // allow register
+                        .requestMatchers(
+                                "/api/users/register",
+                                "/api/users/login",
+                                "/api/users/forgot-password",
+                                "/api/users/verify-otp",
+                                "/api/users/reset-password"
+                        ).permitAll() // allow register
                         .anyRequest().authenticated() // secure others
                 )
                 // 🔥 Add JWT Filter

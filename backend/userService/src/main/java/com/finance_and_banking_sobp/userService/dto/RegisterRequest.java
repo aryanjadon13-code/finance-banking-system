@@ -1,7 +1,10 @@
 package com.finance_and_banking_sobp.userService.dto;
 
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.*;
 import lombok.Data;
+
+import java.time.LocalDateTime;
 
 @Data
 public class RegisterRequest {
@@ -18,4 +21,13 @@ public class RegisterRequest {
 
     @Pattern(regexp = "^[0-9]{10}$", message = "Phone number must be 10 digits")
     private String phoneNumber;
+
+    @Column(name = "otp")
+    private String otp;
+
+    @Column(name = "otp_expiry")
+    private LocalDateTime otpExpiry;
+
+    @Column(name = "otp_verified")
+    private boolean otpVerified;
 }

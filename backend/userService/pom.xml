@@ -77,8 +77,14 @@
             <version>0.11.5</version>
         </dependency>
 
+       <!-- send mail -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
 
-<!--        security for bcript-->
+
+      <!-- security for bcript-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>

@@ -36,4 +36,13 @@ public class UserEntity {
 
     @CreationTimestamp
     private LocalDateTime createdAt;
+
+    @Column(name = "otp")
+    private String otp;
+
+    @Column(name = "otp_expiry")
+    private LocalDateTime otpExpiry;
+
+    @Column(name = "otp_verified")
+    private Boolean otpVerified;
 }
