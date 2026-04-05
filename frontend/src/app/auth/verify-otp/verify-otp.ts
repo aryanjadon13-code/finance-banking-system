@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { Auth } from '../../services/auth';
 
 @Component({
   selector: 'app-verify-otp',
@@ -15,9 +16,16 @@ export class verifyOtp {
   // Store 6 digit OTP
   otp: string[] = ['', '', '', '', '', ''];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private auth: Auth) {}
 
   verifyOtp() {
+
+    const email = this.auth.getEmail();
+    console.log("Verifying OTP for email:", email);
+
+    if(!email){
+      alert("No email found. Please start the process again.");
+    }
 
     // Check if any box is empty
     if (this.otp.includes('')) {
