@@ -78,3 +78,14 @@ button {
   background: linear-gradient(135deg, #2e7d5b, #66bb6a);
   clip-path: polygon(30% 0%, 100% 0%, 100% 100%, 0% 100%);
 }
+
+.top-logo {
+  position: fixed;   /* 🔥 change this */
+  top: 20px;
+  left: 20px;
+  z-index: 1000;     /* keeps it above everything */
+}
+
+.top-logo img {
+  width: 60px;
+}
