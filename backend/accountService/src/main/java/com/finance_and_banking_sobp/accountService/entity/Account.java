@@ -31,4 +31,12 @@ public class Account {
     private Long userId;
 
     private LocalDateTime createdAt;
+
+    @Column(nullable = false)
+    private String branchName;
+
+    @Column(nullable = false)
+    private String currency ;
+
+    private String status;
 }

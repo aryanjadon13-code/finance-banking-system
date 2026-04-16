@@ -11,4 +11,7 @@ public class AccountResponse {
     private String accountNumber;
     private String accountType;
     private Double balance;
+    private String branchName;
+    private String currency;
+    private String status;
 }

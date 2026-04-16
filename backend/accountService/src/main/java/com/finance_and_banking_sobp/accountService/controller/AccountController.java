@@ -3,6 +3,7 @@ package com.finance_and_banking_sobp.accountService.controller;
 import com.finance_and_banking_sobp.accountService.dto.AccountResponse;
 import com.finance_and_banking_sobp.accountService.dto.CreateAccountRequest;
 import com.finance_and_banking_sobp.accountService.service.AccountService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +17,7 @@ public class AccountController {
     private final AccountService service;
 
     @PostMapping
-    public AccountResponse createAccount(@RequestBody CreateAccountRequest request) {
+    public AccountResponse createAccount(@Valid @RequestBody CreateAccountRequest request) {
         return service.createAccount(request);
     }
 
