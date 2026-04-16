@@ -5,6 +5,7 @@ import com.finance_and_banking_sobp.accountService.dto.CreateAccountRequest;
 import com.finance_and_banking_sobp.accountService.service.AccountService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,8 +18,8 @@ public class AccountController {
     private final AccountService service;
 
     @PostMapping
-    public AccountResponse createAccount(@Valid @RequestBody CreateAccountRequest request) {
-        return service.createAccount(request);
+    public ResponseEntity <AccountResponse> createAccount(@Valid @RequestBody CreateAccountRequest request) {
+        return ResponseEntity.ok(service.createAccount(request)) ;
     }
 
     @GetMapping("/{accountNumber}")

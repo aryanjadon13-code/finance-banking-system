@@ -3,6 +3,8 @@ package com.finance_and_banking_sobp.accountService.service;
 import com.finance_and_banking_sobp.accountService.dto.AccountResponse;
 import com.finance_and_banking_sobp.accountService.dto.CreateAccountRequest;
 import com.finance_and_banking_sobp.accountService.entity.Account;
+import com.finance_and_banking_sobp.accountService.exception.AccountNotFoundException;
+import com.finance_and_banking_sobp.accountService.exception.InsufficientBalanceException;
 import com.finance_and_banking_sobp.accountService.models.AccountType;
 import com.finance_and_banking_sobp.accountService.repository.AccountRepository;
 import lombok.AllArgsConstructor;
@@ -64,11 +66,11 @@ public class AccountServiceImpl implements AccountService{
     @Override
     public void updateBalance(String accountNumber, Double amount) {
         Account account =accountRepository.findByAccountNumber(accountNumber)
-                .orElseThrow(()->new RuntimeException("Account not found"));
+                .orElseThrow(()->new AccountNotFoundException("Account not found"));
 
         double newBalance = account.getBalance() + amount;
         if (newBalance < 0){
-            throw new RuntimeException("insufficient balance");
+            throw new InsufficientBalanceException("insufficient balance");
         }
         account.setBalance(newBalance);
         accountRepository.save(account);
