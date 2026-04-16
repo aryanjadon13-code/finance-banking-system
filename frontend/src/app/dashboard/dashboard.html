@@ -1,0 +1,146 @@
+
+<div class="layout">
+
+  <!-- Sidebar -->
+  <app-sidebar></app-sidebar>
+
+  <!-- Main Content -->
+  <div class="main-content">
+
+    <!-- Header -->
+    <app-header></app-header>
+
+    <div *ngIf="isMainDashboard()" class="dashboard-container">
+      <!-- Main Dashboard Content -->
+   
+
+    <!-- Dashboard Content -->
+    <div class="dashboard-container">
+<div class="dashboard">
+
+  <!-- Cards -->
+  <div class="cards">
+
+    <div class="card green-border">
+      <p>Total Balance</p>
+      <h2>₹{{ totalBalance }}</h2>
+      <span class="green">+3.2% this month</span>
+    </div>
+
+    <div class="card blue-border">
+      <p>Total Income</p>
+  <h2>₹{{ totalIncome }}</h2>
+      <span class="green">+8.1% vs last month</span>
+    </div>
+
+    <div class="card red-border">
+      <p>Total Expenses</p>
+      <h2>₹{{ totalExpenses }}</h2>
+      <span class="red">-2.4% vs last month</span>
+    </div>
+
+    <div class="card yellow-border">
+      <p>Pending Bills</p>
+     <h2>₹{{ pendingBills }}</h2>
+      <span class="red">3 bills due soon</span>
+    </div>
+
+  </div>
+
+
+  <div class="bottom-section">
+
+  <!-- LEFT: Chart -->
+  <div class="left">
+    <app-chart></app-chart>
+  </div>
+
+  <!-- RIGHT: Quick Actions -->
+  <div class="right">
+    <div class="quick-actions">
+  <h3>Quick Actions</h3>
+
+  <div class="actions-grid">
+
+    <div class="action green">
+      <i class="fas fa-paper-plane"></i>
+      <p>Send Money</p>
+      <span>Transfer funds</span>
+    </div>
+
+    <div class="action blue">
+      <i class="fas fa-file-invoice"></i>
+      <p>Pay Bills</p>
+      <span>Utility payments</span>
+    </div>
+
+    <div class="action red">
+      <i class="fas fa-mobile-alt"></i>
+      <p>Recharge</p>
+      <span>Mobile top-up</span>
+    </div>
+
+    <div class="action gray">
+      <i class="fas fa-user-plus"></i>
+      <p>Add Beneficiary</p>
+      <span>New recipient</span>
+    </div>
+
+  </div>
+</div>
+  </div>
+
+</div>
+  
+<div class="bottom-cards">
+
+  <!-- Recent Transactions -->
+  <div class="transactions">
+    <div class="card-header">
+      <h3>Recent Transactions</h3>
+      <span class="view-all">View All →</span>
+    </div>
+
+    
+    <div class="transaction-item" *ngFor="let t of transactions">
+  <div>
+    <p>{{ t.title }}</p>
+    <span>{{ t.date }}</span>
+  </div>
+
+  <h4 [class.green]="t.type === 'credit'"
+      [class.red]="t.type === 'debit'">
+
+    {{ t.type === 'credit' ? '+' : '-' }}₹{{ t.amount }}
+
+  </h4>
+</div>
+    
+
+  </div>
+
+   
+  <div class="linked-accounts">
+    <div class="card-header">
+      <h3>Linked Accounts</h3>
+      <span class="view-all">+ Add Account</span>
+    </div>
+
+    
+<div class="account-item" *ngFor="let acc of accounts">
+  <p>{{ acc.name }}</p>
+  <h4>₹{{ acc.balance }}</h4>
+</div>
+    
+
+</div>
+
+</div>
+</div>
+
+  </div>
+   </div>
+   <router-outlet></router-outlet>
+
+</div>
+</div>

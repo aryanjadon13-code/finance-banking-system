@@ -1,27 +1,40 @@
 import { Routes } from '@angular/router';
+
 import { LoginComponent } from './auth/login/login';
-import{RegisterComponent} from './auth/register/register';
+import { RegisterComponent } from './auth/register/register';
 import { ForgotPassword } from './auth/forgot-password/forgot-password';
 import { EmailSent } from './auth/email-sent/email-sent';
 import { verifyOtp } from './auth/verify-otp/verify-otp';
 import { ResetPassword } from './auth/reset-password/reset-password';
-
-import { Layout } from './layout/layout/layout';
-import { Auth } from './services/auth';
-
-import { Sidebar } from './layout/sidebar/sidebar';
-
-
-
+import { Transactions } from './dashboard/transactions/transactions';
+import { Accounts } from './dashboard/accounts/accounts';
+import { Payments } from './dashboard/payments/payments';
+import { Profile } from './dashboard/profile/profile';
+import { Settings } from './dashboard/settings/settings';
+import { Dashboard } from './dashboard/dashboard';
 
 export const routes: Routes = [
-   { path: '', component: LoginComponent },
+
+  // ✅ Auth routes
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
- 
-  { path:'forgot-password', component: ForgotPassword},
+  { path: 'forgot-password', component: ForgotPassword },
   { path: 'email-sent', component: EmailSent },
-  {path: 'verify-otp', component: verifyOtp},
-  {path:'reset-password',component: ResetPassword},
-  
+  { path: 'verify-otp', component: verifyOtp },
+  { path: 'reset-password', component: ResetPassword },
+
+  // ✅ Dashboard route (IMPORTANT)
+ {
+  path: 'dashboard',
+  component: Dashboard,
+  children: [
+    { path: 'transactions', component: Transactions },
+    { path: 'accounts', component: Accounts },
+    { path: 'payments', component: Payments },
+    { path: 'profile', component: Profile },
+    { path: 'settings', component: Settings }
+  ]
+}
+
 ];

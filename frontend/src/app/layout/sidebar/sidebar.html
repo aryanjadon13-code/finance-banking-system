@@ -1,6 +1,56 @@
-<li routerLink="dashboard">Dashboard</li>
-<li routerLink="transaction">Transactions</li>
-<li routerLink="account">Account</li>
-<li routerLink="payment">Payment</li>
-<li routerLink="profile">Profile</li>
-<li routerLink="setting">Settings</li>
+<div class="sidebar">
+
+  <h2 class="logo">SecureBank</h2>
+  <p class="sub">Online Banking Portal</p>
+
+  <h4 class="menu-title">MAIN MENU</h4>
+
+  <ul class="menu">
+
+    <li>
+      <i class="fas fa-chart-line"></i>
+      <a routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        Dashboard
+      </a>
+    </li>
+
+    <li>
+      <i class="fas fa-receipt"></i>
+      <a routerLink="/dashboard/transactions" routerLinkActive="active">
+        Transactions
+      </a>
+    </li>
+
+    <li>
+      <i class="fas fa-university"></i>
+      <a routerLink="/dashboard/accounts" routerLinkActive="active">
+        Accounts
+      </a>
+    </li>
+
+    <li>
+      <i class="fas fa-credit-card"></i>
+      <a routerLink="/dashboard/payments" routerLinkActive="active">
+        Payments
+      </a>
+    </li>
+
+    <li class="section">SETTINGS</li>
+
+    <li>
+      <i class="fas fa-user"></i>
+      <a routerLink="/dashboard/profile" routerLinkActive="active">
+        Profile
+      </a>
+    </li>
+
+    <li>
+      <i class="fas fa-cog"></i>
+      <a routerLink="/dashboard/settings" routerLinkActive="active">
+        Settings
+      </a>
+    </li>
+
+  </ul>
+
+</div>
