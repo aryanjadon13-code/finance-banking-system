@@ -1,0 +1,218 @@
+.accounts-page {
+  padding: 20px 30px;
+}
+
+/* Header */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.page-header h2 {
+  color: white;
+}
+
+.page-header p {
+  color: #aaa;
+  font-size: 14px;
+}
+
+.link-btn {
+  background: #2ecc71;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+}
+
+/* Summary Card */
+.summary-card {
+  background: linear-gradient(135deg, #0f2f24, #134d3a);
+  padding: 25px;
+  border-radius: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+/* Net Worth */
+.net-worth p {
+  color: #aaa;
+}
+
+.net-worth h2 {
+  color: white;
+  margin: 5px 0;
+}
+
+.growth {
+  color: #2ecc71;
+  font-size: 14px;
+}
+
+/* Right Stats */
+.stats {
+  display: flex;
+  gap: 15px;
+}
+
+.stat-box {
+  padding: 10px 15px;
+  border-radius: 10px;
+  min-width: 120px;
+}
+
+.stat-box h4 {
+  color: white;
+}
+
+.green {
+  background: rgba(46, 204, 113, 0.2);
+}
+
+.red {
+  background: rgba(231, 76, 60, 0.2);
+}
+
+.blue {
+  background: rgba(52, 152, 219, 0.2);
+}
+.accounts-section {
+  margin-top: 30px;
+}
+
+.accounts-section h3 {
+  color: white;
+  margin-bottom: 15px;
+}
+
+/* Grid */
+.accounts-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+/* Card */
+.account-card {
+  background: linear-gradient(135deg, #0f2f24, #134d3a);
+  padding: 25px;
+  border-radius: 18px;
+  color: white;
+  position: relative;
+  transition: 0.3s;
+}
+
+.account-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Tag */
+.tag {
+  font-size: 12px;
+  color: #2ecc71;
+}
+
+/* Sub text */
+.sub-text {
+  font-size: 12px;
+  color: #aaa;
+}
+
+/* Balance */
+.account-card h2 {
+  margin: 10px 0;
+}
+
+/* Buttons */
+.actions {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
+}
+
+.actions button {
+  background: rgba(255,255,255,0.1);
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+}
+
+/* Highlight (FD) */
+.highlight {
+  border: 2px solid #f1c40f;
+}
+.bottom-section {
+  margin-top: 30px;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+}
+
+/* LEFT CARD */
+.breakdown {
+  background: linear-gradient(135deg, #0f2f24, #134d3a);
+  padding: 20px;
+  border-radius: 16px;
+  color: white;
+}
+
+.breakdown .sub {
+  color: #aaa;
+  font-size: 13px;
+  margin-bottom: 15px;
+}
+
+/* Progress bars */
+.bar {
+  margin-bottom: 15px;
+}
+
+.progress {
+  height: 8px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 10px;
+  margin-top: 5px;
+}
+
+.fill {
+  height: 100%;
+  border-radius: 10px;
+}
+
+.fill.green { background: #2ecc71; }
+.fill.yellow { background: #f1c40f; }
+.fill.blue { background: #3498db; }
+
+/* Extra stats */
+.extra-stats p {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+/* RIGHT CARD */
+.activity {
+  background: linear-gradient(135deg, #0f2f24, #134d3a);
+  padding: 20px;
+  border-radius: 16px;
+  color: white;
+}
+
+.activity-item {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Colors */
+.green { color: #2ecc71; }
+.red { color: #e74c3c; }
