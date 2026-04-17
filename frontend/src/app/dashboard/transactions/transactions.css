@@ -1,0 +1,128 @@
+.transactions-page {
+  padding: 20px;
+  color: white;
+}
+
+.subtitle {
+  color: #9ca3af;
+  margin-bottom: 20px;
+}
+
+/* Cards */
+.cards {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.card {
+  flex: 1;
+  padding: 20px;
+  border-radius: 15px;
+  background: #0f2d22;
+}
+
+.card.green { border-top: 4px solid #22c55e; }
+.card.blue { border-top: 4px solid #3b82f6; }
+.card.red { border-top: 4px solid #ef4444; }
+
+.card.green :hover {
+  border-top: 2px solid black;
+  cursor: pointer;
+}
+.card.blue :hover {
+  border-top: 2px solid black;
+  cursor: pointer;
+}
+.card.red :hover {
+  border-top: 2px solid black;
+  cursor: pointer;
+}
+
+/* Filters */
+.filters {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
+
+.filters input,
+.filters select {
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  background: #0f2d22;
+  color: white;
+}
+
+/* Transaction List */
+.transaction-list {
+  background: #0f2d22;
+  border-radius: 15px;
+  padding: 20px;
+}
+
+.transaction-item {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  align-items: center;
+  padding: 15px 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  margin-bottom: 8px;
+}
+.transaction-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.left .title {
+  color: white;
+  font-weight: 500;
+}
+
+.left .date {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+.type {
+  display: inline-block;
+  background: rgba(34, 197, 94, 0.2);
+  color: #22c55e;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  text-align: center;
+  width: fit-content;
+}
+
+.amount.green {
+  color: #22c55e;
+  font-weight: 600;
+}
+
+.amount.red {
+  color: #ef4444;
+  font-weight: 600;
+}
+
+.status {
+  font-size: 13px;
+  color: #9ca3af;
+}
+.page-header {
+  margin-bottom: 20px;
+}
+
+.page-header h2 {
+  color: white;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.page-header p {
+  color: #9ca3af;
+  font-size: 14px;
+}
