@@ -1,7 +1,9 @@
 package com.finance_and_banking_sobp.accountService.service;
 
+import com.finance_and_banking_sobp.accountService.TransactionClient;
 import com.finance_and_banking_sobp.accountService.dto.AccountResponse;
 import com.finance_and_banking_sobp.accountService.dto.CreateAccountRequest;
+import com.finance_and_banking_sobp.accountService.dto.TransactionRequest;
 import com.finance_and_banking_sobp.accountService.entity.Account;
 import com.finance_and_banking_sobp.accountService.exception.AccountNotFoundException;
 import com.finance_and_banking_sobp.accountService.exception.InsufficientBalanceException;
@@ -20,6 +22,7 @@ import java.util.stream.Collectors;
 public class AccountServiceImpl implements AccountService{
     
     private final AccountRepository accountRepository;
+    private final TransactionClient transactionClient;
     
     @Override
     public AccountResponse createAccount(CreateAccountRequest request) {
@@ -34,7 +37,7 @@ public class AccountServiceImpl implements AccountService{
         Account account =Account.builder()
                 .accountNumber(generateAccountNumber())
                 .accountType(AccountType.valueOf(request.getAccountType().name()))
-                .balance(request.getInitialDeposit())
+                .balance(0.0)
                 .branchName(request.getBranchName())
                 .currency(
                         request.getCurrency()==null || request.getCurrency().isEmpty()
@@ -45,6 +48,16 @@ public class AccountServiceImpl implements AccountService{
                 .createdAt(LocalDateTime.now())
                 .build();
         accountRepository.save(account);
+
+        if (request.getInitialDeposit() !=null && request.getInitialDeposit()>500){
+
+            TransactionRequest transactionRequest = new TransactionRequest();
+            transactionRequest.setAccountNumber(account.getAccountNumber());
+            transactionRequest.setAmount(request.getInitialDeposit());
+
+            transactionClient.deposit(transactionRequest);
+        }
+
         return maptoResponse(account);
     }
 
