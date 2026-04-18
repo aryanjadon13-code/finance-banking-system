@@ -27,15 +27,15 @@
 .card.red { border-top: 4px solid #ef4444; }
 
 .card.green :hover {
-  border-top: 2px solid black;
+ 
   cursor: pointer;
 }
 .card.blue :hover {
-  border-top: 2px solid black;
+ 
   cursor: pointer;
 }
 .card.red :hover {
-  border-top: 2px solid black;
+ 
   cursor: pointer;
 }
 
@@ -71,11 +71,7 @@
   border-bottom: 1px solid rgba(255,255,255,0.05);
   margin-bottom: 8px;
 }
-.transaction-item:hover {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 8px;
-  cursor: pointer;
-}
+
 
 .left .title {
   color: white;

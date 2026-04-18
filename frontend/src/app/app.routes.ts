@@ -12,6 +12,8 @@ import { Payments } from './dashboard/payments/payments';
 import { Profile } from './dashboard/profile/profile';
 import { Settings } from './dashboard/settings/settings';
 import { Dashboard } from './dashboard/dashboard';
+import { CreateAccount } from './create-account/create-account';
+import { SendMoney } from './pages/send-money/send-money';
 
 export const routes: Routes = [
 
@@ -33,7 +35,9 @@ export const routes: Routes = [
     { path: 'accounts', component: Accounts },
     { path: 'payments', component: Payments },
     { path: 'profile', component: Profile },
-    { path: 'settings', component: Settings }
+    { path: 'settings', component: Settings },
+    { path: 'create-account', component: CreateAccount, data: { title: 'Create Account' } },
+    {path:'send-money',component:SendMoney,data:{title:'Send Money'}}
   ]
 }
 

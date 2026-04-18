@@ -5,6 +5,9 @@ import { Header } from '../layout/header/header';
 import { Sidebar } from '../layout/sidebar/sidebar';
 import { RouterOutlet } from '@angular/router';
 import { Router } from '@angular/router';
+import { ChangeDetectorRef } from '@angular/core';
+
+
 @Component({
   selector: 'app-dashboard',
   standalone: true,                
@@ -15,11 +18,39 @@ import { Router } from '@angular/router';
 export class Dashboard {
 
 
-  constructor(public router: Router) {}
+  constructor(public router: Router, private cdRef: ChangeDetectorRef) {}
 
   isMainDashboard() {
     return this.router.url === '/dashboard';
   }
+
+goToSendMoney() {
+  this.router.navigate(['/dashboard/send-money']);
+}
+  comingSoonMessage = '';
+showToast = false;
+
+showComingSoon(feature: string) {
+  this.comingSoonMessage = `${feature} feature coming soon 🚧`;
+  this.showToast = true;
+
+  setTimeout(() => {
+    this.showToast = false;
+    this.cdRef.detectChanges();
+  }, 2000);
+}
+
+getPageTitle() {
+  const url = this.router.url;
+
+  if (url.includes('send-money')) return 'Send Money';
+  if (url.includes('create-account')) return 'Create Account';
+  if (url.includes('transactions')) return 'Transactions';
+  if (url.includes('accounts')) return 'Accounts';
+
+  return 'Dashboard';
+}
+
 
   totalBalance = 0;
   totalIncome = 0;
