@@ -14,6 +14,7 @@
     <app-header></app-header>
 
     <div *ngIf="isMainDashboard()" class="dashboard-container">
+
       <!-- Main Dashboard Content -->
    
 
@@ -82,6 +83,7 @@
       <p>Recharge</p>
       <span>Mobile top-up</span>
     </div>
+   
 
     <div class="action gray" (click)="showComingSoon('Add Beneficiary')">
       <i class="fas fa-user-plus"></i>
@@ -91,6 +93,9 @@
     
 
   </div>
+   <div class="toast" *ngIf="showToast">
+  {{ comingSoonMessage }}
+</div>
 </div>
   </div>
 
@@ -144,7 +149,8 @@
 
   </div>
    </div>
-   <router-outlet></router-outlet>
+    <router-outlet></router-outlet>
+
 
 </div>
 </div>

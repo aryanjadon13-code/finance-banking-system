@@ -6,6 +6,7 @@ import { Sidebar } from '../layout/sidebar/sidebar';
 import { RouterOutlet } from '@angular/router';
 import { Router } from '@angular/router';
 import { ChangeDetectorRef } from '@angular/core';
+import { log } from 'node:console';
 
 
 @Component({
@@ -29,15 +30,18 @@ goToSendMoney() {
 }
   comingSoonMessage = '';
 showToast = false;
+timeoutRef:any=null;
 
 showComingSoon(feature: string) {
+ 
   this.comingSoonMessage = `${feature} feature coming soon 🚧`;
   this.showToast = true;
 
-  setTimeout(() => {
+  this.timeoutRef=setTimeout(() => {
     this.showToast = false;
     this.cdRef.detectChanges();
-  }, 2000);
+    this.timeoutRef=null;
+  },2000);
 }
 
 getPageTitle() {

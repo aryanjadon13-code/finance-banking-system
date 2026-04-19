@@ -140,6 +140,7 @@
   grid-template-columns: repeat(2, 1fr);
   gap: 12px;
   margin-top: 15px;
+  
 }
 
 .action {
@@ -167,13 +168,22 @@
 .action span {
   font-size: 12px;
   color: #d1d5db;
+ 
 }
 
 /* Colors */
-.green { background: #1f7a5c; }
+.green { text: #1f7a5c; }
 .blue { background: #1e3a8a; }
-.red { background: #b91c1c; }
+.red { text: #b91c1c; }
 .gray { background: #374151; }
+
+.action.green {
+  background-color: #086329;
+}
+.action.red {
+  background-color: #b81919;
+}
+
 
 .action:hover {
   transform: scale(1.05);
@@ -295,15 +305,15 @@
   flex: 1;
 }
 .toast {
-  position: fixed;
-  top: 20px;
+  position: fixed;   /* already correct */
+  top: 100px;        /* 👈 increase this */
   right: 20px;
   background: #1f3d33;
   color: white;
   padding: 12px 18px;
   border-radius: 8px;
   box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-  z-index: 999;
+  z-index: 9999;     /* 👈 increase more */
 }
 .top-logo {
   position: fixed;   /* 🔥 change this */
