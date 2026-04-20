@@ -322,6 +322,13 @@
   }
 }
 
+
+  @media (max-width: 768px) {
+  .layout {
+    flex-direction: column;
+  }
+}
+
  
 
 .main-content {
@@ -337,6 +344,7 @@
 /* Mobile */
 @media (max-width: 768px) {
   .main-content {
+    width: 100%;
     margin-left: 0;
     padding-top: 80px;
   }
