@@ -71,3 +71,29 @@
   background: transparent;
   color: white;
 }
+@media (max-width: 768px) {
+  .header {
+    left: 0;   /* remove sidebar space */
+    padding: 10px;
+  }
+
+  .search-box input {
+    width: 120px;
+  }
+}
+
+.menu-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 22px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+/* Hide on desktop */
+@media (min-width: 769px) {
+  .menu-btn {
+    display: none;
+  }
+}

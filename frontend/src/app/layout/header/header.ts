@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
+import { SidebarService } from '../sidebar/sidebar.service';
 
 @Component({
   selector: 'app-header',
@@ -12,7 +13,11 @@ export class Header {
   title: string = '';
   subtitle: string = '';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private sidebarService: SidebarService) {}
+
+  toggleSidebar() {
+  this.sidebarService.toggle();
+}
 
   ngOnInit() {
     this.updateHeader(this.router.url);

@@ -34,15 +34,19 @@
   position: absolute;
   inset: 0;
   background: rgba(0,0,0,0.3);
+  z-index: 1;
 }
 
 /* TEXT ON IMAGE */
 .overlay {
   position: absolute;
-  top: 40px;
+  top: 10%;
   left: 30px;
+  transform:none;
+  background: transparent;
   color: white;
   width: 80%;
+  z-index: 2; 
 }
 
 .overlay button {
@@ -57,7 +61,7 @@
 /* RIGHT FORM */
 .right-form {
   width: 50%;
-  padding: 60px 50px;
+  padding: 0px 30px;
 }
 
 .right-form label {
@@ -99,4 +103,28 @@
 
 .top-logo img {
   width: 60px;
+}
+
+.right-form div {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+} 
+
+
+
+@media (max-width: 768px) {
+  .left-image{
+    display: none;
+  }
+  .card {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .left-image,
+  .right-form {
+    width: 100%;
+  }
 }

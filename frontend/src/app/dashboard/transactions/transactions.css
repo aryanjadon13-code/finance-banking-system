@@ -122,3 +122,13 @@
   color: #9ca3af;
   font-size: 14px;
 }
+@media (max-width: 768px) {
+  .transactions-page .cards {
+    flex-direction: column;
+  }
+
+  .transaction-item {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}

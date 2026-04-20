@@ -7,7 +7,7 @@ import { RouterOutlet } from '@angular/router';
 import { Router } from '@angular/router';
 import { ChangeDetectorRef } from '@angular/core';
 import { log } from 'node:console';
-
+import { SidebarService } from '../layout/sidebar/sidebar.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,7 +19,11 @@ import { log } from 'node:console';
 export class Dashboard {
 
 
-  constructor(public router: Router, private cdRef: ChangeDetectorRef) {}
+constructor(
+  public router: Router,
+  private cdRef: ChangeDetectorRef,
+  public sidebarService: SidebarService   
+) {}
 
   isMainDashboard() {
     return this.router.url === '/dashboard';

@@ -7,11 +7,14 @@
   <!-- Sidebar -->
   <app-sidebar></app-sidebar>
 
+  <div class="overlay" *ngIf="sidebarService.isOpen" (click)="sidebarService.toggle()"></div>
+
   <!-- Main Content -->
   <div class="main-content">
 
     <!-- Header -->
     <app-header></app-header>
+     <router-outlet></router-outlet>
 
     <div *ngIf="isMainDashboard()" class="dashboard-container">
 
@@ -149,7 +152,7 @@
 
   </div>
    </div>
-    <router-outlet></router-outlet>
+   
 
 
 </div>
