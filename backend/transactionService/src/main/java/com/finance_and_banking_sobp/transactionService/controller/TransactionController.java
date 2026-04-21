@@ -1,5 +1,6 @@
 package com.finance_and_banking_sobp.transactionService.controller;
 
+import com.finance_and_banking_sobp.transactionService.dto.TransactionFilterRequest;
 import com.finance_and_banking_sobp.transactionService.dto.TransactionRequest;
 import com.finance_and_banking_sobp.transactionService.dto.TransferRequest;
 import com.finance_and_banking_sobp.transactionService.entity.Transaction;
@@ -35,4 +36,12 @@ public class TransactionController {
     public List<Transaction> getTransactions(@PathVariable String accountNumber) {
         return transactionService.getTransactions(accountNumber);
     }
+
+//    @PostMapping("/filter")
+//    public List<Transaction> filterTransactions(
+//            @RequestBody TransactionFilterRequest request,
+//            @RequestHeader ("user-email") String email
+//    ) {
+//        return transactionService.filterTransactions(request);
+//    }
 }

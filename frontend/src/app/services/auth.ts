@@ -4,21 +4,34 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class Auth {
-   private email:string='';
+   
+  setToken(token:any){
+    localStorage.setItem("token" , token);
+  }
+
+  getToken(){
+    return localStorage.getItem("token") || "";
+  }
+
+  setForgotPasswordEmail(email: string){
+    localStorage.setItem("email", email);
+  }
 
 
-   //store email in service
-   setEmail(email:string){
-    this.email=email;
-   }
 
-   //get email from service
-   getEmail():string{
-    return this.email;
-   }
+  getForgotPasswordEmail(){
+    return localStorage.getItem("email") || "";
+  }
 
-   //clear email from service
-   clearEmail(){
-    this.email='';
-   }
+  clearEmail(){
+
+  }
+
+  clear(){
+    localStorage.clear();
+  }
+
+  isUserLoggedIn(){
+    return this.getToken() ;
+  }
 }

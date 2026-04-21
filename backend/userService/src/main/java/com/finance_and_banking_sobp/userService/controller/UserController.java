@@ -5,8 +5,12 @@ import com.finance_and_banking_sobp.userService.service.OtpService;
 import com.finance_and_banking_sobp.userService.service.UserService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/users")
 @AllArgsConstructor
@@ -33,17 +37,17 @@ public class UserController {
 //    otp controllers
 
     @PostMapping("/forgot-password")
-    public String forgotPassword(@Valid @RequestBody ForgotPasswordRequest request) {
+    public ResponseEntity<Map<String, String>> forgotPassword(@Valid @RequestBody ForgotPasswordRequest request) {
         return otpService.forgotPassword(request);
     }
 
     @PostMapping("/verify-otp")
-    public String verifyOtp(@RequestBody VerifyOtpRequest request) {
+    public ResponseEntity<Map<String, String>> verifyOtp(@RequestBody VerifyOtpRequest request) {
         return otpService.verifyOtp(request);
     }
 
     @PostMapping("/reset-password")
-    public String resetPassword(@RequestBody ResetPasswordRequest request) {
+    public ResponseEntity<?> resetPassword(@RequestBody ResetPasswordRequest request) {
         return otpService.resetPassword(request);
     }
 }

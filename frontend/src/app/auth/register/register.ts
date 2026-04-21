@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink, Router } from '@angular/router';
+import { UserService } from '../../services/user-service';
 
 @Component({
   selector: 'app-register',
@@ -18,9 +19,22 @@ export class RegisterComponent {
   confirmPassword: string = '';
 
   // ✅ ADD THIS
-  constructor(private router: Router) {}
+  constructor(private router: Router , private userService : UserService) {}
 
   register() {
+
+    this.userService.register(this.name , this.email , this.phone , this.password , this.confirmPassword).subscribe({
+      next:(res)=>{
+        console.log(res);
+      } , 
+      error :(err)=>{
+        console.log(err);
+      }
+    });
+
+
+
+
 
     if (this.password !== this.confirmPassword) {
       alert("Passwords do not match");

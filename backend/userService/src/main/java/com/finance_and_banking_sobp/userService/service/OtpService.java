@@ -6,10 +6,12 @@ import com.finance_and_banking_sobp.userService.dto.VerifyOtpRequest;
 import com.finance_and_banking_sobp.userService.entity.UserEntity;
 import com.finance_and_banking_sobp.userService.repository.UserRepo;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 @Service
 @AllArgsConstructor
@@ -22,7 +24,7 @@ public class OtpService {
         return String.valueOf((int) (Math.random() * 900000) + 100000);
     }
 
-    public String forgotPassword(ForgotPasswordRequest request) {
+    public ResponseEntity<Map<String, String>> forgotPassword(ForgotPasswordRequest request) {
 
         UserEntity user = userRepo.findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -40,11 +42,11 @@ public class OtpService {
         } catch (Exception e) {
             throw new RuntimeException("Failed to send email");
         }
-        return "otp sent to you email";
+        return ResponseEntity.ok(Map.of("message", "otp sent to your email"));
 
     }
 
-    public String verifyOtp(VerifyOtpRequest request){
+    public ResponseEntity<Map<String, String>> verifyOtp(VerifyOtpRequest request){
         UserEntity user = userRepo.findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
@@ -58,10 +60,10 @@ public class OtpService {
         user.setOtpVerified(true);
         userRepo.save(user);
 
-        return "OTP verified successfully";
+        return ResponseEntity.ok(Map.of("message", "otp verified successfully"));
     }
 
-    public String resetPassword (ResetPasswordRequest request){
+    public ResponseEntity<?> resetPassword (ResetPasswordRequest request){
       UserEntity user=  userRepo.findByEmail(request.getEmail()).orElseThrow(()->new RuntimeException("user not found"));
 
         if (!Boolean.TRUE.equals(user.getOtpVerified())) {
@@ -75,6 +77,6 @@ public class OtpService {
 
       userRepo.save(user);
 
-      return "password reset successful";
+      return  ResponseEntity.ok(Map.of("message", "password reset successfull"));
     }
 }

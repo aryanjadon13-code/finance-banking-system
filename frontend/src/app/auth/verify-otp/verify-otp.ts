@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { Auth } from '../../services/auth';
+import { UserService } from '../../services/user-service';
 
 @Component({
   selector: 'app-verify-otp',
@@ -16,32 +17,47 @@ export class verifyOtp {
   // Store 6 digit OTP
   otp: string[] = ['', '', '', '', '', ''];
 
-  constructor(private router: Router, private auth: Auth) {}
+  constructor(private router: Router, private authService: Auth , private userService : UserService) {}
 
   verifyOtp() {
-
-    const email = this.auth.getEmail();
-    console.log("Verifying OTP for email:", email);
-
-    if(!email){
-      alert("No email found. Please start the process again.");
-    }
-
-    // Check if any box is empty
-    if (this.otp.includes('')) {
-      alert("Please enter complete OTP");
+    const email = this.authService.getForgotPasswordEmail();
+    if(email === ""){
+      this.authService.clear();
+      this.router.navigate(['/login']);
       return;
     }
+    const otpString = this.otp.join('');
+    console.log(otpString);
+    this.userService.verifyOtp(email , otpString).subscribe({
+      next:()=>{
+        console.log("Otp verified successfully!");
+        this.router.navigate(['/reset-password']);
 
-    // Combine OTP digits
-    const finalOtp = this.otp.join('');
+      },
+      error:(err)=>{
+        console.log("failed to verify !" , err); 
 
-    console.log("Entered OTP:", finalOtp);
-
-    // Demo success
-    alert("OTP Verified");
-
-    // Navigate to reset password
-    this.router.navigate(['/reset-password']);
+      }
+    })
   }
+
+
+
+  moveFocus(event: any, nextElement: HTMLInputElement | null): void {
+  const currentInput = event.target as HTMLInputElement;
+  const isBackspace = event.key === 'Backspace';
+
+  // Move forward if a value is entered
+  if (currentInput.value && nextElement) {
+    nextElement.focus();
+  }
+
+  // Move backward if backspace is pressed
+  if (isBackspace) {
+    const previousElement = currentInput.previousElementSibling as HTMLInputElement;
+    if (previousElement) {
+      previousElement.focus();
+    }
+  }
+}
 }

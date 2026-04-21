@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Auth } from '../../services/auth';
+import { UserService } from '../../services/user-service';
 
 @Component({
   selector: 'app-reset-password',
@@ -13,7 +14,7 @@ export class ResetPassword {
    newPassword:string='';
    confirmPassword:string='';
 
-   constructor(private router:Router, private auth:Auth){}
+   constructor(private router:Router, private authService:Auth , private userService : UserService){}
 
    resetPassword(){
     if(!this.newPassword || !this.confirmPassword ){
@@ -24,7 +25,7 @@ export class ResetPassword {
       alert("Passwords do not match");
       return;
     }
-     const email = this.auth.getEmail();
+     const email = this.authService.getForgotPasswordEmail();
      console.log("Email for password reset:", email);
 
      if(!email){
@@ -33,11 +34,15 @@ export class ResetPassword {
       return;
      }
 
-    alert("Password reset successful");
+    this.userService.resetPassword(email , this.newPassword).subscribe({
+      next:()=>{
+        console.log("password reset successfull!");
+        this.router.navigate(['/login']);
+      },
+      error:(err)=>{
+        console.log("failed to reset the password!" , err);
 
-    //clean email from service
-    this.auth.clearEmail();
-    
-    this.router.navigate(['/login']);
+      }
+    })
    }
 }

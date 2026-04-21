@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-email-sent',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './email-sent.html',
   styleUrl: './email-sent.css',
   standalone: true

@@ -3,6 +3,7 @@ import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { log } from 'console';
 import { Auth} from '../../services/auth'; 
+import { UserService } from '../../services/user-service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -13,19 +14,20 @@ import { Auth} from '../../services/auth';
 })
 export class ForgotPassword {
   email:string='';
-  constructor ( private router:Router, private auth:Auth){}
+  constructor ( private router:Router, private authService:Auth , private userService : UserService){}
 
-  sendotp(){
-    if(!this.email){
-      alert('Please enter your email address');
-      return;
+  forgetPassword(){
+    this.userService.forgotPassword(this.email).subscribe({
+      next:()=>{
+        this.authService.setForgotPasswordEmail(this.email);
+        console.log("Otp sent to your email !");
+        this.router.navigate(['/email-sent'])
+      },
+      error:(err)=>{
+        console.log("failed to generate otp!" , err);
+      }
 
-      //store email in service
-      this.auth.setEmail(this.email);
-    }
-    alert('OTP sent to your email address');
-   console.log("clicked");
-  this.router.navigate(['/email-sent']);
+    })
   }
 
 }

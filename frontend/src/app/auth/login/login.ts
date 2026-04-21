@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { log } from 'console';
 import { Router, RouterLink } from '@angular/router';
+import { UserService } from '../../services/user-service';
+import { Auth } from '../../services/auth';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +16,7 @@ export class LoginComponent {
   email:string='';
   password:string='';
 
-constructor (private router:Router){}
+constructor (private router:Router , private userService : UserService , private authService : Auth  ){}
  
 forgotPassword() {
   alert("Forgot password feature will be implemented with backend");
@@ -22,15 +24,17 @@ forgotPassword() {
     login() {
 
 
-      const storedUser=JSON.parse(localStorage.getItem('user')||'{}');
+      this.userService.login(this.email , this.password).subscribe({
+        next:(res)=>{
+          console.log(res);
+          this.authService.setToken(res.token);
+          this.router.navigate(['/dashboard']);
+        },
+        error:(error)=>{
 
-      if(this.email===storedUser.email&& this.password==storedUser.password){
-        alert("login successful");
-        this.router.navigate(['/dashboard']);
-      }else{
-        alert("Invalid email or password");
+          console.log("error : " , error)
+        }
+      })
 
-        
-      }
     }
   }

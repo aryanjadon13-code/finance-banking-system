@@ -16,14 +16,14 @@
       Enter the 6-digit code sent to your email
     </p>
 
-    <div class="otp-box">
-      <input maxlength="1"[(ngModel)]="otp[0]">
-      <input maxlength="1"[(ngModel)]="otp[1]">
-      <input maxlength="1"[(ngModel)]="otp[2]">
-      <input maxlength="1"[(ngModel)]="otp[3]">
-      <input maxlength="1"[(ngModel)]="otp[4]">
-      <input maxlength="1"[(ngModel)]="otp[5]">
-    </div>
+   <div class="otp-box">
+  <input #otp1 maxlength="1" [(ngModel)]="otp[0]" (keyup)="moveFocus($event, otp2)">
+  <input #otp2 maxlength="1" [(ngModel)]="otp[1]" (keyup)="moveFocus($event, otp3)">
+  <input #otp3 maxlength="1" [(ngModel)]="otp[2]" (keyup)="moveFocus($event, otp4)">
+  <input #otp4 maxlength="1" [(ngModel)]="otp[3]" (keyup)="moveFocus($event, otp5)">
+  <input #otp5 maxlength="1" [(ngModel)]="otp[4]" (keyup)="moveFocus($event, otp6)">
+  <input #otp6 maxlength="1" [(ngModel)]="otp[5]" (keyup)="moveFocus($event, null)">
+</div>
 
     <button (click)="verifyOtp()">Verify</button>
 

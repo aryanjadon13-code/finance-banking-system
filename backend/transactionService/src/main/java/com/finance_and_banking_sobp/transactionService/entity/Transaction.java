@@ -24,15 +24,15 @@ public class Transaction {
 
         private String accountNumber;
 
-        private String referenceAccount;
+        private String referenceAccount; // samne wale ka account number
 
-        private String type;
+        private String type; //credit ya debit
 
-        private String direction;
+        private String direction; //deposit ya withdrw
 
         private Double amount;
 
-        private String status;
+        private String status; // successful ya failed
 
         private LocalDateTime createdAt;
 

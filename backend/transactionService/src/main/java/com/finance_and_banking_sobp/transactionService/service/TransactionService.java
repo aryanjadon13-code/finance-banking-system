@@ -1,6 +1,7 @@
 package com.finance_and_banking_sobp.transactionService.service;
 
 import com.finance_and_banking_sobp.transactionService.dto.AccountResponse;
+import com.finance_and_banking_sobp.transactionService.dto.TransactionFilterRequest;
 import com.finance_and_banking_sobp.transactionService.dto.TransactionRequest;
 import com.finance_and_banking_sobp.transactionService.dto.TransferRequest;
 import com.finance_and_banking_sobp.transactionService.entity.Transaction;
@@ -12,6 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -172,4 +174,66 @@ public class TransactionService {
     public List<Transaction> getTransactions(String accountNumber) {
         return transectionRepo.findByAccountNumber(accountNumber);
     }
+
+//    public List<Transaction> filterTransactions(TransactionFilterRequest request) {
+//
+////        String accountNumber = request.getAccountNumber();
+//        String type = request.getType(); // CREDIT / DEBIT / ALL
+//        String dateFilter = request.getDateFilter();
+//
+//        LocalDateTime from = null;
+//        LocalDateTime to = null;
+//
+//        // 🔥 STEP 1: HANDLE DATE FILTER
+//        if (dateFilter != null) {
+//
+//            switch (dateFilter) {
+//
+//                case "LAST_7_DAYS":
+//                    from = LocalDate.now().minusDays(7).atStartOfDay();
+//                    to = LocalDateTime.now();
+//                    break;
+//
+//                case "LAST_MONTH":
+//                    from = LocalDate.now().minusMonths(1).atStartOfDay();
+//                    to = LocalDateTime.now();
+//                    break;
+//
+//                case "CUSTOM":
+//                    from = LocalDate.parse(request.getFromDate()).atStartOfDay();
+//                    to = LocalDate.parse(request.getToDate()).atTime(23, 59, 59);
+//                    break;
+//            }
+//        }
+//
+//        // 🔥 STEP 2: APPLY FILTER COMBINATIONS
+//
+//        // ✅ BOTH TYPE + DATE
+//        if (type != null && !"ALL".equals(type) && from != null && to != null) {
+//            return transectionRepo
+//                    .findByAccountNumberAndDirectionAndCreatedAtBetweenOrderByCreatedAtDesc(
+//                            accountNumber, type, from, to
+//                    );
+//        }
+//
+//        // ✅ ONLY TYPE
+//        if (type != null && !"ALL".equals(type)) {
+//            return transectionRepo
+//                    .findByAccountNumberAndDirectionOrderByCreatedAtDesc(
+//                            accountNumber, type
+//                    );
+//        }
+//
+//        // ✅ ONLY DATE
+//        if (from != null && to != null) {
+//            return transectionRepo
+//                    .findByAccountNumberAndCreatedAtBetweenOrderByCreatedAtDesc(
+//                            accountNumber, from, to
+//                    );
+//        }
+//
+//        // ✅ NO FILTER → RETURN ALL
+//        return transectionRepo
+//                .findByAccountNumberOrderByCreatedAtDesc(accountNumber);
+//    }
 }
