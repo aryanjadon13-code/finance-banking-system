@@ -1,19 +1,24 @@
 
 <div class="layout">
+  <!-- logo  -->
    <div class="top-logo">
-    <img src="/sobp.png" alt="logo">
+   
   </div>
 
   <!-- Sidebar -->
   <app-sidebar></app-sidebar>
+
+  <div class="overlay" *ngIf="sidebarService.isOpen" (click)="sidebarService.toggle()"></div>
 
   <!-- Main Content -->
   <div class="main-content">
 
     <!-- Header -->
     <app-header></app-header>
+     <router-outlet></router-outlet>
 
     <div *ngIf="isMainDashboard()" class="dashboard-container">
+
       <!-- Main Dashboard Content -->
    
 
@@ -82,6 +87,7 @@
       <p>Recharge</p>
       <span>Mobile top-up</span>
     </div>
+   
 
     <div class="action gray" (click)="showComingSoon('Add Beneficiary')">
       <i class="fas fa-user-plus"></i>
@@ -91,6 +97,9 @@
     
 
   </div>
+   <div class="toast" *ngIf="showToast">
+  {{ comingSoonMessage }}
+</div>
 </div>
   </div>
 
@@ -102,7 +111,7 @@
   <div class="transactions">
     <div class="card-header">
       <h3>Recent Transactions</h3>
-      <span class="view-all">View All →</span>
+      <!-- <span class="view-all">View All →</span> -->
     </div>
 
     
@@ -144,7 +153,8 @@
 
   </div>
    </div>
-   <router-outlet></router-outlet>
+   
+
 
 </div>
 </div>

@@ -6,7 +6,8 @@ import { Sidebar } from '../layout/sidebar/sidebar';
 import { RouterOutlet } from '@angular/router';
 import { Router } from '@angular/router';
 import { ChangeDetectorRef } from '@angular/core';
-
+import { log } from 'node:console';
+import { SidebarService } from '../layout/sidebar/sidebar.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,7 +19,11 @@ import { ChangeDetectorRef } from '@angular/core';
 export class Dashboard {
 
 
-  constructor(public router: Router, private cdRef: ChangeDetectorRef) {}
+constructor(
+  public router: Router,
+  private cdRef: ChangeDetectorRef,
+  public sidebarService: SidebarService   
+) {}
 
   isMainDashboard() {
     return this.router.url === '/dashboard';
@@ -29,15 +34,18 @@ goToSendMoney() {
 }
   comingSoonMessage = '';
 showToast = false;
+timeoutRef:any=null;
 
 showComingSoon(feature: string) {
+ 
   this.comingSoonMessage = `${feature} feature coming soon 🚧`;
   this.showToast = true;
 
-  setTimeout(() => {
+  this.timeoutRef=setTimeout(() => {
     this.showToast = false;
     this.cdRef.detectChanges();
-  }, 2000);
+    this.timeoutRef=null;
+  },2000);
 }
 
 getPageTitle() {

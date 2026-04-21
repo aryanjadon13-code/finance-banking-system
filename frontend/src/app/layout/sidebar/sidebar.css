@@ -14,7 +14,14 @@
 }
 
 .logo {
-  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+ 
+
+  img{
+    width: 50px;
+    height: 50px;
+  }
 }
 
 .sub {
@@ -87,3 +94,23 @@ li:hover {
 i {
   font-size: 16px;
 }
+/* MOBILE VIEW */
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    left: -250px;   /* hidden by default */
+    top: 0;
+    height: 100vh;
+    width: 250px;
+    z-index: 1000;
+    transition: 0.3s;
+  }
+
+  .sidebar.active {
+    left: 0;   /* show sidebar */
+  }
+}
+
+  .sidebar.open {
+    left: 0;   /* show */
+  }

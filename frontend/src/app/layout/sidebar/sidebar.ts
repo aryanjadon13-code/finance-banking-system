@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { SidebarService } from './sidebar.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -10,5 +11,9 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   styleUrl: './sidebar.css',
 })
 export class Sidebar {
-
+  constructor(public sidebarService: SidebarService) {}
+ isOpen=false;
+ toggleSidebar() {
+   this.isOpen = !this.isOpen;
+ }
 }
