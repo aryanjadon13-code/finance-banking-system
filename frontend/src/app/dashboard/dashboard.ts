@@ -52,6 +52,8 @@ getPageTitle() {
   const url = this.router.url;
 
   if (url.includes('send-money')) return 'Send Money';
+  if (url.includes('beneficiaries')) return 'Beneficiaries';
+  if (url.includes('add-beneficiary')) return 'Add Beneficiary';
   if (url.includes('create-account')) return 'Create Account';
   if (url.includes('transactions')) return 'Transactions';
   if (url.includes('accounts')) return 'Accounts';

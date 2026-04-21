@@ -1,0 +1,28 @@
+<div class="beneficiary-page">
+  <div class="hero">
+    <p class="eyebrow">Payments</p>
+    <h2>Add Beneficiary</h2>
+    <p class="copy">Save trusted recipients once, then use them later during transfers.</p>
+  </div>
+
+  <form class="beneficiary-card" (submit)="$event.preventDefault()">
+    <label for="name">Beneficiary Name</label>
+    <input id="name" name="name" [(ngModel)]="form.name" placeholder="Enter beneficiary name">
+
+    <label for="accountNumber">Account Number</label>
+    <input id="accountNumber" name="accountNumber" [(ngModel)]="form.accountNumber" placeholder="Enter account number">
+
+    <label for="bankName">Bank Name</label>
+    <input id="bankName" name="bankName" [(ngModel)]="form.bankName" placeholder="Enter bank name">
+
+    <label for="ifscCode">IFSC Code</label>
+    <input id="ifscCode" name="ifscCode" [(ngModel)]="form.ifscCode" placeholder="Enter IFSC code">
+
+    <button type="button" [disabled]="loading" (click)="addBeneficiary()">
+      {{ loading ? 'Saving...' : 'Add Beneficiary' }}
+    </button>
+
+    <p class="success" *ngIf="successMessage">{{ successMessage }}</p>
+    <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+  </form>
+</div>

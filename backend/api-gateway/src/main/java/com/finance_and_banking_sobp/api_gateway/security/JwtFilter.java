@@ -1,8 +1,11 @@
 package com.finance_and_banking_sobp.api_gateway.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.gateway.filter.*;
-import org.springframework.http.*;
+import org.springframework.cloud.gateway.filter.GatewayFilterChain;
+import org.springframework.cloud.gateway.filter.GlobalFilter;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
@@ -15,17 +18,20 @@ public class JwtFilter implements GlobalFilter {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-
+        HttpMethod method = exchange.getRequest().getMethod();
         String path = exchange.getRequest().getURI().getPath();
 
-        // ✅ Allow public APIs
+        // Let browser preflight checks pass without authentication.
+        if (HttpMethod.OPTIONS.equals(method)) {
+            return chain.filter(exchange);
+        }
+
         if (path.contains("/login") || path.contains("/register") ||
                 path.contains("/forgot-password") || path.contains("/verify-otp") ||
                 path.contains("/reset-password")) {
             return chain.filter(exchange);
         }
 
-        // 🔐 Get Authorization header
         String authHeader = exchange.getRequest()
                 .getHeaders()
                 .getFirst(HttpHeaders.AUTHORIZATION);
@@ -37,7 +43,6 @@ public class JwtFilter implements GlobalFilter {
 
         String token = authHeader.substring(7);
 
-        // ✅ Validate token
         if (!jwtUtil.validateToken(token)) {
             exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
             return exchange.getResponse().setComplete();

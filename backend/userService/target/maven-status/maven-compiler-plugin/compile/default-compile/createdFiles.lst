@@ -1,8 +1,8 @@
 com\finance_and_banking_sobp\userService\dto\RegisterRequest.class
-com\finance_and_banking_sobp\userService\repository\UserRepo.class
 com\finance_and_banking_sobp\userService\service\UserService.class
 com\finance_and_banking_sobp\userService\controller\UserController.class
 com\finance_and_banking_sobp\userService\dto\UserResponse.class
-com\finance_and_banking_sobp\userService\entity\UserEntity.class
 com\finance_and_banking_sobp\userService\UserServiceApplication.class
 com\finance_and_banking_sobp\userService\exception\GlobalExceptionHandler.class
+com\finance_and_banking_sobp\userService\repository\UserRepo.class
+com\finance_and_banking_sobp\userService\entity\UserEntity.class

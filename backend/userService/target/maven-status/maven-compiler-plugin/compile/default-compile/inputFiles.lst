@@ -1,8 +1,19 @@
-C:\Users\hp\Documents\Banking And Finance\banking-portal\backend\userService\src\main\java\com\finance_and_banking_sobp\userService\controller\UserController.java
-C:\Users\hp\Documents\Banking And Finance\banking-portal\backend\userService\src\main\java\com\finance_and_banking_sobp\userService\dto\RegisterRequest.java
-C:\Users\hp\Documents\Banking And Finance\banking-portal\backend\userService\src\main\java\com\finance_and_banking_sobp\userService\dto\UserResponse.java
-C:\Users\hp\Documents\Banking And Finance\banking-portal\backend\userService\src\main\java\com\finance_and_banking_sobp\userService\entity\UserEntity.java
-C:\Users\hp\Documents\Banking And Finance\banking-portal\backend\userService\src\main\java\com\finance_and_banking_sobp\userService\exception\GlobalExceptionHandler.java
-C:\Users\hp\Documents\Banking And Finance\banking-portal\backend\userService\src\main\java\com\finance_and_banking_sobp\userService\repository\UserRepo.java
-C:\Users\hp\Documents\Banking And Finance\banking-portal\backend\userService\src\main\java\com\finance_and_banking_sobp\userService\service\UserService.java
-C:\Users\hp\Documents\Banking And Finance\banking-portal\backend\userService\src\main\java\com\finance_and_banking_sobp\userService\UserServiceApplication.java
+c:\Users\Aaryan jadon\OneDrive\Desktop\finance-banking-system\backend\userService\src\main\java\com\finance_and_banking_sobp\userService\config\PasswordConfig.java
+c:\Users\Aaryan jadon\OneDrive\Desktop\finance-banking-system\backend\userService\src\main\java\com\finance_and_banking_sobp\userService\config\SecurityConfig.java
+c:\Users\Aaryan jadon\OneDrive\Desktop\finance-banking-system\backend\userService\src\main\java\com\finance_and_banking_sobp\userService\controller\UserController.java
+c:\Users\Aaryan jadon\OneDrive\Desktop\finance-banking-system\backend\userService\src\main\java\com\finance_and_banking_sobp\userService\dto\ForgotPasswordRequest.java
+c:\Users\Aaryan jadon\OneDrive\Desktop\finance-banking-system\backend\userService\src\main\java\com\finance_and_banking_sobp\userService\dto\LoginRequest.java
+c:\Users\Aaryan jadon\OneDrive\Desktop\finance-banking-system\backend\userService\src\main\java\com\finance_and_banking_sobp\userService\dto\LoginResponse.java
+c:\Users\Aaryan jadon\OneDrive\Desktop\finance-banking-system\backend\userService\src\main\java\com\finance_and_banking_sobp\userService\dto\RegisterRequest.java
+c:\Users\Aaryan jadon\OneDrive\Desktop\finance-banking-system\backend\userService\src\main\java\com\finance_and_banking_sobp\userService\dto\ResetPasswordRequest.java
+c:\Users\Aaryan jadon\OneDrive\Desktop\finance-banking-system\backend\userService\src\main\java\com\finance_and_banking_sobp\userService\dto\UserResponse.java
+c:\Users\Aaryan jadon\OneDrive\Desktop\finance-banking-system\backend\userService\src\main\java\com\finance_and_banking_sobp\userService\dto\VerifyOtpRequest.java
+c:\Users\Aaryan jadon\OneDrive\Desktop\finance-banking-system\backend\userService\src\main\java\com\finance_and_banking_sobp\userService\entity\UserEntity.java
+c:\Users\Aaryan jadon\OneDrive\Desktop\finance-banking-system\backend\userService\src\main\java\com\finance_and_banking_sobp\userService\exception\GlobalExceptionHandler.java
+c:\Users\Aaryan jadon\OneDrive\Desktop\finance-banking-system\backend\userService\src\main\java\com\finance_and_banking_sobp\userService\repository\UserRepo.java
+c:\Users\Aaryan jadon\OneDrive\Desktop\finance-banking-system\backend\userService\src\main\java\com\finance_and_banking_sobp\userService\security\JwtFilter.java
+c:\Users\Aaryan jadon\OneDrive\Desktop\finance-banking-system\backend\userService\src\main\java\com\finance_and_banking_sobp\userService\security\JwtUtil.java
+c:\Users\Aaryan jadon\OneDrive\Desktop\finance-banking-system\backend\userService\src\main\java\com\finance_and_banking_sobp\userService\service\EmailService.java
+c:\Users\Aaryan jadon\OneDrive\Desktop\finance-banking-system\backend\userService\src\main\java\com\finance_and_banking_sobp\userService\service\OtpService.java
+c:\Users\Aaryan jadon\OneDrive\Desktop\finance-banking-system\backend\userService\src\main\java\com\finance_and_banking_sobp\userService\service\UserService.java
+c:\Users\Aaryan jadon\OneDrive\Desktop\finance-banking-system\backend\userService\src\main\java\com\finance_and_banking_sobp\userService\UserServiceApplication.java

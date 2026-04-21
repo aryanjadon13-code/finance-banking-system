@@ -1,0 +1,47 @@
+<div class="beneficiaries-page">
+  <div class="page-head">
+    <div>
+      <p class="eyebrow">Beneficiaries</p>
+      <h2>Your Saved Recipients</h2>
+      <p>Manage transfer recipients linked to your account.</p>
+    </div>
+
+    <a class="action-link" routerLink="/dashboard/add-beneficiary">Add Beneficiary</a>
+  </div>
+
+  <p class="status" *ngIf="loading">Loading beneficiaries...</p>
+  <p class="success" *ngIf="!loading && successMessage">{{ successMessage }}</p>
+  <p class="error" *ngIf="!loading && errorMessage">{{ errorMessage }}</p>
+
+  <div class="empty-state" *ngIf="!loading && !errorMessage && beneficiaries.length === 0">
+    <h3>No beneficiaries added yet</h3>
+    <p>Add a beneficiary to start making transfers faster.</p>
+  </div>
+
+  <div class="beneficiary-grid" *ngIf="!loading && beneficiaries.length > 0">
+    <article class="beneficiary-card" *ngFor="let beneficiary of beneficiaries">
+      <div class="card-top">
+        <div>
+          <h3>{{ beneficiary.name }}</h3>
+          <p>{{ beneficiary.bankName }}</p>
+        </div>
+        <button type="button" (click)="deleteBeneficiary(beneficiary.id)">Delete</button>
+      </div>
+
+      <div class="detail-row">
+        <span>Account Number</span>
+        <strong>{{ beneficiary.accountNumber }}</strong>
+      </div>
+
+      <div class="detail-row">
+        <span>IFSC</span>
+        <strong>{{ beneficiary.ifscCode }}</strong>
+      </div>
+
+      <div class="detail-row">
+        <span>Created</span>
+        <strong>{{ beneficiary.createdAt | date:'medium' }}</strong>
+      </div>
+    </article>
+  </div>
+</div>

@@ -17,9 +17,10 @@ public class JwtUtil {
     private final long EXPIRATION = 1000 * 60 * 60; // 1 hour
 
     // 🔐 Generate token
-    public String generateToken(String email) {
+    public String generateToken(String email, Long userId) {
         return Jwts.builder()
                 .setSubject(email)
+                .claim("userId", userId)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION))
                 .signWith(key, SignatureAlgorithm.HS256)

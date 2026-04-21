@@ -14,6 +14,8 @@ import { Settings } from './dashboard/settings/settings';
 import { Dashboard } from './dashboard/dashboard';
 import { CreateAccount } from './create-account/create-account';
 import { SendMoney } from './pages/send-money/send-money';
+import { Beneficiaries } from './pages/beneficiaries/beneficiaries';
+import { AddBeneficiary } from './pages/add-beneficiary/add-beneficiary';
 
 export const routes: Routes = [
 
@@ -37,7 +39,9 @@ export const routes: Routes = [
     { path: 'profile', component: Profile },
     { path: 'settings', component: Settings },
     { path: 'create-account', component: CreateAccount, data: { title: 'Create Account' } },
-    {path:'send-money',component:SendMoney,data:{title:'Send Money'}}
+    { path: 'send-money', component: SendMoney, data: { title: 'Send Money' } },
+    { path: 'beneficiaries', component: Beneficiaries, data: { title: 'Beneficiaries' } },
+    { path: 'add-beneficiary', component: AddBeneficiary, data: { title: 'Add Beneficiary' } }
   ]
 }
 

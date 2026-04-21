@@ -49,7 +49,7 @@ public class UserService {
             throw new RuntimeException("invalid password");
         }
 
-        String token = jwtUtil.generateToken(user.getEmail());
+        String token = jwtUtil.generateToken(user.getEmail(), user.getId());
 
         return new LoginResponse(
                 user.getId(),
