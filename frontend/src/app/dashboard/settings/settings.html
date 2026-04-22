@@ -1,1 +1,106 @@
-<p>settings works!</p>
+<div class="settings-container">
+
+  
+  <!-- SECURITY CARD -->
+  <div class="settings-card">
+
+    <h3 class="section-title">
+  <i class="fas fa-lock"></i> SECURITY
+</h3>
+
+    <div *ngFor="let item of securitySettings" class="setting-row">
+
+      <!-- LEFT -->
+      <div class="left">
+        <i class="fas" [ngClass]="item.icon"></i>
+
+        <div>
+          <p class="title">{{ item.title }}</p>
+          <span class="desc">{{ item.desc }}</span>
+        </div>
+      </div>
+
+      <!-- RIGHT (TOGGLE) -->
+      <div class="toggle"
+           [class.active]="item.enabled"
+           (click)="item.enabled = !item.enabled">
+      </div>
+
+    </div>
+
+  </div>
+
+<!-- NOTIFICATIONS CARD -->
+<div class="settings-card">
+
+  <h3 class="section-title">
+    <i class="fas fa-bell"></i> NOTIFICATIONS
+  </h3>
+
+  <div *ngFor="let item of notificationsSettings" class="setting-row">
+
+    <!-- LEFT -->
+    <div class="left">
+      <i class="fas" [ngClass]="item.icon"></i>
+
+      <div>
+        <p class="title">{{ item.title }}</p>
+        <span class="desc">{{ item.desc }}</span>
+      </div>
+    </div>
+
+    <!-- RIGHT (TOGGLE) -->
+    <div class="toggle"
+         [class.active]="item.enabled"
+         (click)="item.enabled = !item.enabled">
+
+      <div class="toggle-circle"></div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- ACCOUNT CARD -->
+<div class="settings-card">
+
+  <h3 class="section-title">
+    <i class="fas fa-cog"></i> ACCOUNT
+  </h3>
+
+  <div *ngFor="let item of accountSettings" class="setting-row">
+
+    <!-- LEFT -->
+    <div class="left">
+      <i class="fas" [ngClass]="item.icon"></i>
+
+      <div>
+        <p class="title" [class.highlight]="item.highlight">
+          {{ item.title }}
+        </p>
+        <span class="desc">{{ item.desc }}</span>
+      </div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="right">
+
+      <!-- STATUS (like Verified) -->
+      <span *ngIf="item.status" class="status-badge">
+        {{ item.status }}
+      </span>
+
+      <!-- ARROW -->
+      <i *ngIf="!item.status" class="fas fa-chevron-right arrow"></i>
+
+    </div>
+
+  </div>
+
+
+
+
+
+</div>
+</div>

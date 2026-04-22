@@ -1,1 +1,145 @@
-<p>profile works!</p>
+<div class="container">
+  <div class="profile-header">
+ 
+     <div></div>
+  <button class="save-btn" (click)="saveChanges()">
+    Save Changes
+  </button>
+</div>
+  <div class="profile-layout">
+
+  
+
+    <!-- LEFT SIDE -->
+    <div class="left-section">
+
+      <!-- PROFILE CARD -->
+      <div class="profile-card">
+
+        <div class="avatar-wrapper">
+          <div class="avatar">
+            {{ user.name.charAt(0) }}{{ user.name.split(' ')[1]?.charAt(0) }}
+          </div>
+
+          <div class="edit-icon" (click)="editProfileImage()">
+            <i class="fas fa-pencil-alt"></i>
+          </div>
+        </div>
+
+        <h2>{{ user.name }}</h2>
+        <p class="email">{{ user.email }}</p>
+
+        <div class="tags">
+          <span class="kyc">✔ KYC {{ user.account.kyc }}</span>
+          <span class="premium">{{ user.account.type }}</span>
+        </div>
+
+      </div>
+
+      <!-- ACCOUNT STATUS -->
+      <div class="status-card">
+
+        <h3>ACCOUNT STATUS</h3>
+
+        <div class="status-item">
+          <span>Member Since</span>
+          <p>{{ user.account.memberSince }}</p>
+        </div>
+
+        <div class="status-item">
+          <span>Account Type</span>
+          <p class="highlight">{{ user.account.type }}</p>
+        </div>
+
+        <div class="status-item">
+          <span>KYC Status</span>
+          <p class="verified">✔ {{ user.account.kyc }}</p>
+        </div>
+
+        <div class="status-item">
+          <span>Linked Accounts</span>
+          <p>{{ user.account.linkedAccounts }} Active</p>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="right-section">
+
+      <div class="info-card">
+
+  <h3>PERSONAL INFORMATION</h3>
+
+  <div class="info-row">
+    <div class="left">
+      <i class="fas fa-user"></i>
+      <div>
+        <span>Full Name</span>
+        <p>{{ user.name }}</p>
+      </div>
+    </div>
+    <button>Edit</button>
+  </div>
+
+  <div class="info-row">
+    <div class="left">
+      <i class="fas fa-envelope"></i>
+      <div>
+        <span>Email Address</span>
+        <p>{{ user.email }}</p>
+      </div>
+    </div>
+    <button>Edit</button>
+  </div>
+
+  <div class="info-row">
+    <div class="left">
+      <i class="fas fa-phone"></i>
+      <div>
+        <span>Mobile Number</span>
+        <p>{{ user.phone }}</p>
+      </div>
+    </div>
+    <button>Edit</button>
+  </div>
+
+  <!-- STATIC -->
+  <div class="info-row">
+    <div class="left">
+      <i class="fas fa-calendar"></i>
+      <div>
+        <span>Date of Birth</span>
+        <p>15 March 1995</p>
+      </div>
+    </div>
+    <button>Edit</button>
+  </div>
+
+  
+  <!-- NOMINEE -->
+  <div class="info-row">
+    <div class="left">
+      <i class="fas fa-user-shield"></i>
+      <div>
+        <span>Nominee</span>
+        <p>{{ user.nominee.name }} ({{ user.nominee.relation }})</p>
+      </div>
+    </div>
+    <button>Edit</button>
+  </div>
+
+  <div class="save-container">
+  <button class="save-btn full-width" (click)="saveChanges()">
+    Save Changes
+  </button>
+</div>
+
+</div>
+
+    </div>
+
+  </div>
+
+</div>
