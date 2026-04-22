@@ -1,0 +1,19 @@
+<div class="pin-page">
+
+  <div class="pin-card">
+    <h2>Enter PIN</h2>
+
+    <p>Please enter your 4-digit PIN to confirm payment</p>
+
+    <input 
+      type="password" 
+      maxlength="4" 
+      [(ngModel)]="enteredPin"
+      placeholder="****"
+    >
+
+    <button (click)="verifyPin()">Confirm Payment</button>
+
+  </div>
+
+</div>

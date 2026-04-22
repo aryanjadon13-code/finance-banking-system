@@ -18,44 +18,75 @@ export class RegisterComponent {
   password: string = '';
   confirmPassword: string = '';
 
-  // ✅ ADD THIS
-  constructor(private router: Router , private userService : UserService) {}
+  constructor(private router: Router, private userService: UserService) {}
 
   register() {
 
-    this.userService.register(this.name , this.email , this.phone , this.password , this.confirmPassword).subscribe({
-      next:(res)=>{
-        console.log(res);
-      } , 
-      error :(err)=>{
-        console.log(err);
-      }
-    });
-
-
-
-
-
-    if (this.password !== this.confirmPassword) {
-      alert("Passwords do not match");
+    //  Name validation
+    const nameRegex = /^[A-Za-z ]+$/;
+    if (!nameRegex.test(this.name)) {
+      alert('Name should contain only letters');
       return;
     }
 
-    const user = {
-      name: this.name,
-      email: this.email,
-      phone: this.phone,
-      password: this.password,
-      accountNumber: "1234567890",
-      balance: 50000
-    };
+    //  Phone validation
+    const phoneRegex = /^[0-9]{10}$/;
+    if (!phoneRegex.test(this.phone)) {
+      alert('Phone number must be 10 digits');
+      return;
+    }
 
-    localStorage.setItem('user', JSON.stringify(user));
+    //  Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(this.email)) {
+      alert('Enter valid email');
+      return;
+    }
 
-    alert('Registration successful! Please login.');
+    //  Password validation
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[@$!%*?&]).{6,}$/;
+    if (!passwordRegex.test(this.password)) {
+      alert('Password must be strong (1 uppercase, 1 number, 1 special char)');
+      return;
+    }
 
-    //direct to login page after registration
+    //  Confirm password
+    if (this.password !== this.confirmPassword) {
+      alert('Passwords do not match');
+      return;
+    }
+
+    // API CALL (backend integration)
+    this.userService.register(
+      this.name,
+      this.email,
+      this.phone,
+      this.password,
+      this.confirmPassword
+    ).subscribe({
+      next: (res) => {
+        console.log('Success:', res);
+
+        //  Save user locally (temporary)
+        const user = {
+          name: this.name,
+          email: this.email,
+          phone: this.phone
+        };
+
+        localStorage.setItem('user', JSON.stringify(user));
+
+        alert('Registration successful!');
+
+       
+
+    //  ALWAYS go to login
     this.router.navigate(['/login']);
+  },
+      error: (err) => {
+        console.log('Error:', err);
+        alert('Registration failed!');
+      }
+    });
   }
 }
-

@@ -4,9 +4,10 @@ import { Sidebar } from './layout/sidebar/sidebar';
 import { Header } from './layout/header/header';
 import { Dashboard } from './dashboard/dashboard';
 
+
 @Component({
   selector: 'app-root',
-  imports: [ RouterOutlet],
+  imports: [ RouterOutlet,],
   templateUrl: './app.html',
   styleUrl: './app.css',
   standalone: true,

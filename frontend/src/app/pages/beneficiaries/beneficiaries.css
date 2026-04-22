@@ -1,150 +1,157 @@
 .beneficiaries-page {
   display: grid;
-  gap: 24px;
-  padding: 28px;
+  gap: 14px;                 /* 🔥 reduced gap */
+  padding: 16px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #022c22, #064e3b);
 }
 
+/* HEADER */
 .page-head {
   display: flex;
   justify-content: space-between;
-  gap: 16px;
-  align-items: end;
-  padding: 24px;
-  border-radius: 20px;
-  background:
-    radial-gradient(circle at top left, rgba(243, 156, 18, 0.35), transparent 35%),
-    linear-gradient(135deg, #fff8ef, #fff);
+  align-items: center;       /* 🔥 fix vertical alignment */
+  gap: 12px;
+  padding: 18px 20px;        /* 🔥 balanced padding */
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.08);
+
+  /* ❌ REMOVE these */
+  /* height: 150px; */
+  /* padding-bottom: 50px; */
 }
 
+/* TEXT */
 .eyebrow {
-  margin: 0 0 8px;
+  margin: 0 0 6px;
   text-transform: uppercase;
   letter-spacing: 0.14em;
-  font-size: 12px;
-  color: #9a6700;
+  font-size: 11px;
+  color: #86efac;
 }
 
 .page-head h2 {
-  margin: 0 0 6px;
-  color: #2f1b0c;
+  margin: 0 0 4px;
+  color: #f0fdf4;
+  font-size: 20px;           /* 🔥 slightly smaller */
 }
 
 .page-head p {
   margin: 0;
-  color: #7a5a3a;
+  color: #bbf7d0;
+  font-size: 13px;
 }
 
+/* BUTTON FIX */
 .action-link {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 180px;
-  padding: 14px 18px;
+  padding: 10px 16px;        /* 🔥 smaller */
   border-radius: 999px;
-  background: #f39c12;
-  color: #1d1308;
+  background: #22c55e;
+  color: #022c22;
   text-decoration: none;
-  font-weight: 700;
+  font-weight: 600;
+  font-size: 14px;
+  transition: 0.2s ease;
+  white-space: nowrap;
 }
 
-.status,
-.success,
-.error {
-  margin: 0;
+.action-link:hover {
+  background: #16a34a;
+  transform: translateY(-1px);
 }
 
-.success {
-  color: #0a8f46;
-}
-
-.error {
-  color: #b42318;
-}
-
-.empty-state {
-  padding: 32px;
-  border-radius: 18px;
-  background: #fff;
-  text-align: center;
-  box-shadow: 0 14px 30px rgba(47, 27, 12, 0.08);
-}
-
-.empty-state h3,
-.empty-state p {
-  margin: 0;
-}
-
-.empty-state p {
-  margin-top: 8px;
-  color: #6b7280;
-}
-
+/* GRID */
 .beneficiary-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); /* 🔥 smaller cards */
+  gap: 14px;
 }
 
+/* CARD */
 .beneficiary-card {
   display: grid;
-  gap: 14px;
-  padding: 22px;
-  border-radius: 18px;
-  background: #fff;
-  box-shadow: 0 16px 32px rgba(47, 27, 12, 0.08);
+  gap: 10px;                 /* 🔥 tighter */
+  padding: 14px;             /* 🔥 reduced */
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: #e5e7eb;
+  transition: 0.2s;
 }
 
+.beneficiary-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.3);
+}
+
+/* TOP */
 .card-top {
   display: flex;
   justify-content: space-between;
-  gap: 12px;
-  align-items: start;
+  align-items: center;
 }
 
-.card-top h3,
-.card-top p {
+.card-top h3 {
   margin: 0;
+  font-size: 15px;           /* 🔥 compact */
+  color: #f0fdf4;
 }
 
 .card-top p {
-  margin-top: 6px;
-  color: #6b7280;
+  margin-top: 4px;
+  font-size: 12px;
+  color: #bbf7d0;
 }
 
+/* DELETE BUTTON */
 .card-top button {
   border: none;
-  border-radius: 10px;
-  padding: 10px 14px;
-  background: #fff1f1;
-  color: #b42318;
-  font-weight: 600;
+  border-radius: 8px;
+  padding: 6px 10px;         /* 🔥 smaller */
+  font-size: 12px;
+  background: rgba(255, 0, 0, 0.15);
+  color: #f87171;
   cursor: pointer;
 }
 
+/* DETAILS */
 .detail-row {
   display: flex;
   justify-content: space-between;
-  gap: 12px;
-  padding-top: 12px;
-  border-top: 1px solid #edf2f7;
+  padding-top: 6px;          /* 🔥 reduced */
+  border-top: 1px solid rgba(255,255,255,0.08);
 }
 
 .detail-row span {
-  color: #667085;
+  font-size: 12px;
+  color: #a7f3d0;
 }
 
 .detail-row strong {
-  color: #101828;
-  text-align: right;
+  font-size: 12px;
+  color: #f0fdf4;
 }
 
+/* RESPONSIVE */
 @media (max-width: 768px) {
   .beneficiaries-page {
-    padding: 16px;
+    padding: 12px;
   }
 
   .page-head {
-    align-items: stretch;
     flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .action-link {
+    width: 100%;
+    justify-content: center;
   }
 }

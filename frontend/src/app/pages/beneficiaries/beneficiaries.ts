@@ -34,19 +34,18 @@ export class Beneficiaries implements OnInit, OnDestroy {
       this.beneficiaries = beneficiaries;
 
       // IMPORTANT: stop loading if data comes
-      if (beneficiaries.length > 0) {
-        this.loading = false;
-      }
+     this.beneficiaries=beneficiaries;
+     this.loading=false;
     });
 
     // Step 3: Load cached data first
-    const cached = this.beneficiaryService.getCurrentBeneficiaries();
-    console.log('Cached items:', cached.length);
+    // const cached = this.beneficiaryService.getCurrentBeneficiaries();
+    // console.log('Cached items:', cached.length);
 
-    if (cached.length > 0) {
-      this.beneficiaries = cached;
-      this.loading = false;
-    }
+    // if (cached.length > 0) {
+    //   this.beneficiaries = cached;
+    //   this.loading = false;
+    // }
 
     // Step 4: Fetch fresh data (without hiding UI)
     this.loadBeneficiaries();
@@ -59,7 +58,7 @@ export class Beneficiaries implements OnInit, OnDestroy {
   loadBeneficiaries() {
     console.log('loadBeneficiaries called');
 
-    // ✅ FIX: only show loader if no data exists
+    // only show loader if no data exists
     if (this.beneficiaries.length === 0) {
       this.loading = true;
     }

@@ -13,26 +13,46 @@ import { UserService } from '../../services/user-service';
 export class ResetPassword {
    newPassword:string='';
    confirmPassword:string='';
+   errorMessage:string='';
 
    constructor(private router:Router, private authService:Auth , private userService : UserService){}
+   
+   
 
-   resetPassword(){
-    if(!this.newPassword || !this.confirmPassword ){
-      alert("Please fill all the fields");
+    resetPassword() {
+
+    this.errorMessage = '';
+
+    // ✅ Required check
+    if (!this.newPassword || !this.confirmPassword) {
+      this.errorMessage = "Please fill all the fields";
       return;
     }
-    if(this.newPassword !== this.confirmPassword){
-      alert("Passwords do not match");
+
+    // ✅ Strong password validation
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[@$!%*?&]).{6,}$/;
+
+    if (!passwordRegex.test(this.newPassword)) {
+      this.errorMessage =
+        "Password must be strong (min 6 chars, 1 uppercase, 1 number, 1 special char)";
       return;
     }
-     const email = this.authService.getForgotPasswordEmail();
-     console.log("Email for password reset:", email);
 
-     if(!email){
-      alert("Session expired. Please start the process again.");
+    // ✅ Match check
+    if (this.newPassword !== this.confirmPassword) {
+      this.errorMessage = "Passwords do not match";
+      return;
+    }
+
+    // ✅ Get email from session
+    const email = this.authService.getForgotPasswordEmail();
+    console.log("Email for password reset:", email);
+
+    if (!email) {
+      this.errorMessage = "Session expired. Please start again.";
       this.router.navigate(['/forgot-password']);
       return;
-     }
+    }
 
     this.userService.resetPassword(email , this.newPassword).subscribe({
       next:()=>{
@@ -41,6 +61,8 @@ export class ResetPassword {
       },
       error:(err)=>{
         console.log("failed to reset the password!" , err);
+
+        this.errorMessage =err?.error?.message || "something went wrong";
 
       }
     })

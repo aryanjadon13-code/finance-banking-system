@@ -30,17 +30,31 @@ forgotPassword() {
     login() {
       this.userService.login(this.email , this.password).subscribe({
         next:(res)=>{
-          console.log('=== LOGIN SUCCESSFUL ===');
+          console.log("full response:",res);
+         
+          // after successful login
+
+
           console.log('Token received, userId:', res.userId);
           this.authService.setUserSession(res.token, res.userId, res.email);
+
           console.log('User session set, syncing beneficiary cache...');
           this.beneficiaryService.syncCacheForCurrentUser();
-          console.log('Navigating to dashboard');
-          this.router.navigate(['/dashboard']);
-        },
-        error:(error)=>{
-          console.error('Login error:', error);
-        }
-      })
+       
+          
+
+   if (res.account) {
+        this.router.navigate(['/dashboard']);
+      } else {
+        this.router.navigate(['/dashboard/create-account']);
+      }
+
+    },
+    error: (error) => {
+      console.error('Login error:', error);
+      alert('Invalid credentials');
+    }
+  });
+
     }
   }

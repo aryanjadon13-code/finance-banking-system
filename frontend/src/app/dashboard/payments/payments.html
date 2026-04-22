@@ -1,1 +1,34 @@
-<p>payments works!</p>
+<div class="send-money-page">
+
+  <div class="form-card">
+    <h2>Send Money</h2>
+
+    <!-- From Account -->
+<label>From Account</label>
+<input 
+  type="text" 
+  [value]="'Savings Account (₹2,18,600)'" 
+  disabled
+>
+
+    <!-- Beneficiary -->
+    <label>Select Beneficiary</label>
+    <select [(ngModel)]="selectedUser">
+      <option value="">-- Select User --</option>
+      <option *ngFor="let user of users" [value]="user.name">
+        {{ user.name }}
+      </option>
+    </select>
+
+    <!-- Amount -->
+    <label>Amount</label>
+    <input type="number" [(ngModel)]="amount" placeholder="Enter amount">
+
+    <!-- Note -->
+    <label>Note (optional)</label>
+    <input type="text" [(ngModel)]="note" placeholder="Add note">
+
+    <!-- Button -->
+    <button (click)="goToPin()">Enter PIN</button>
+  </div>
+</div>

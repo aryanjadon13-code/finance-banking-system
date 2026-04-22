@@ -37,6 +37,13 @@ updateHeader(url: string) {
     this.subtitle = 'Transfer funds securely';
   }
 
+ 
+
+  if(url.includes('add-beneficiary')) {
+    this.title = 'Add Beneficiary';
+    this.subtitle = 'Add a new recipient';
+  }
+
   else if (url.includes('create-account')) {
     this.title = 'Create Account';
     this.subtitle = 'Open a new bank account';
@@ -55,6 +62,10 @@ updateHeader(url: string) {
   else if (url.includes('payments')) {
     this.title = 'Payments';
     this.subtitle = 'Make and track payments';
+  }
+   else if (url.includes('beneficiaries')) {
+    this.title = 'Beneficiaries';
+    this.subtitle = 'Manage your recipients';
   }
 
   else if (url.includes('profile')) {
