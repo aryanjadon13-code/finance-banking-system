@@ -2,11 +2,12 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TransactionService } from '../../services/transaction.service';
 import { Auth } from '../../services/auth';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-transactions',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule , FormsModule],
   templateUrl: './transactions.html',
   styleUrl: './transactions.css',
 })
@@ -18,11 +19,11 @@ export class Transactions implements OnInit {
     private cdr : ChangeDetectorRef
   ){}
 
-  totalBalance = 0;
-  totalIncome = 0;
-  totalExpenses = 0;
+  searchText = "";
+  selectedType = "all";
+  selectedMonth = "all";
+  
   currentPage = 0;
-  title = "";
 
   transactions : any[] = [];
 
@@ -32,7 +33,7 @@ export class Transactions implements OnInit {
 
   loadData(){
     const userId = Number(this.authService.getUserId());
-    this.transactionService.getTransaction(userId , this.currentPage).subscribe({
+    this.transactionService.getTransaction(userId , this.currentPage , this.searchText , this.selectedType , this.selectedMonth).subscribe({
       next:(res:any)=>{
         console.log(res);
         this.transactions =[...res.data]
@@ -45,4 +46,11 @@ export class Transactions implements OnInit {
       }
     })
   }
+
+
+  onFilterChange(){
+    this.loadData();
+    this.cdr.detectChanges();
+  }
+
 }

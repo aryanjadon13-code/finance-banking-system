@@ -8,17 +8,21 @@ import { Auth } from './auth';
   providedIn: 'root',
 })
 export class TransactionService {
-  private readonly baseUrl = 'http://localhost:8083/api/transactions/user';
+  private readonly baseUrl = 'http://localhost:8080/api/transactions/user';
 
   constructor(private authService : Auth , private http : HttpClient){}
 
-
-
-  getTransaction(userId:number , page : number){
+  getTransaction(userId:number , page : number , searchText:string , selectedType:string , selectedMonth:string){
      let params = new HttpParams()
-    .set('page', page.toString());
+    .set('page', page.toString())
+    .set("searchText" , searchText)
+    .set("selectedType" , selectedType)
+    .set("selectedMonth" , selectedMonth);
 
-    return  this.http.get(`${this.baseUrl}/${userId}`   ,{ params})
+    return  this.http.get(`${this.baseUrl}/${userId}`, {
+      headers: this.buildHeaders(),
+      params : params
+    })
   }
 
 

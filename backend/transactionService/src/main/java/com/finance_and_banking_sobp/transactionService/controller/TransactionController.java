@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/transactions")
 @RequiredArgsConstructor
 public class TransactionController {
@@ -37,8 +36,11 @@ public class TransactionController {
     @GetMapping("/user/{userId}")
     public ResponseEntity<?> getUserTransactions(
             @PathVariable Long userId,
-            @RequestParam(defaultValue = "0") int page
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "") String searchText,
+            @RequestParam(defaultValue = "All") String selectedType,
+            @RequestParam(defaultValue = "All") String selectedMonth
     ) {
-        return ResponseEntity.ok(service.getTransactionsByUser(userId, page));
+        return ResponseEntity.ok(service.getTransactionsByUser(userId, page , searchText , selectedType , selectedMonth));
     }
 }

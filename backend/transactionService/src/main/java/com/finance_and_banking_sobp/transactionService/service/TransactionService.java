@@ -162,14 +162,70 @@ public class TransactionService {
     }
 
 
-    public ApiResponse<?> getTransactionsByUser(Long userId, int page) {
+    public ApiResponse<?> getTransactionsByUser(Long userId,
+                                                int page,
+                                                String searchText,
+                                                String selectedType,
+                                                String selectedMonth) {
 
         Pageable pageable = PageRequest.of(page, 5, Sort.by("createdAt").descending());
 
         Page<Transaction> pageResult =
                 repo.findBySenderUserIdOrReceiverUserId(userId, userId, pageable);
 
-        List<TransactionViewResponse> data = pageResult.stream().map(txn -> {
+        List<Transaction> filtered = pageResult.getContent();
+
+        // ================= FILTER: TYPE =================
+        if (selectedType != null
+                && !selectedType.isEmpty()
+                && !selectedType.equalsIgnoreCase("all")) {
+
+            filtered = filtered.stream()
+                    .filter(txn -> txn.getDirection().equalsIgnoreCase(selectedType))
+                    .toList();
+        }
+
+        // ================= FILTER: SEARCH =================
+        if (searchText != null && !searchText.isEmpty()) {
+            filtered = filtered.stream()
+                    .filter(txn ->
+                            (txn.getDescription() != null &&
+                                    txn.getDescription().toLowerCase().contains(searchText.toLowerCase()))
+                    )
+                    .toList();
+        }
+
+        // ================= FILTER: DATE =================
+        if (selectedMonth != null
+                && !selectedMonth.isEmpty()
+                && !selectedMonth.equalsIgnoreCase("all")) {
+
+            LocalDateTime now = LocalDateTime.now();
+
+            filtered = filtered.stream().filter(txn -> {
+
+                LocalDateTime txnDate = txn.getCreatedAt();
+
+                switch (selectedMonth) {
+
+                    case "last_7_days":
+                        return txnDate.isAfter(now.minusDays(7));
+
+                    case "this_month":
+                        return txnDate.getMonth() == now.getMonth()
+                                && txnDate.getYear() == now.getYear();
+
+                    case "last_3_months":
+                        return txnDate.isAfter(now.minusMonths(3));
+
+                    default:
+                        return true;
+                }
+
+            }).toList();
+        }
+        // ================= MAP TO RESPONSE =================
+        List<TransactionViewResponse> data = filtered.stream().map(txn -> {
 
             String amount = txn.getDirection().equals("CREDIT")
                     ? "+₹" + txn.getAmount()
