@@ -1,28 +1,67 @@
 <div class="beneficiary-page">
+
   <div class="hero">
     <p class="eyebrow">Payments</p>
     <h2>Add Beneficiary</h2>
-    <p class="copy">Save trusted recipients once, then use them later during transfers.</p>
+    <p class="copy">
+      Save trusted recipients once, then use them later during transfers.
+    </p>
   </div>
 
   <form class="beneficiary-card" (submit)="$event.preventDefault()">
-    <label for="name">Beneficiary Name</label>
-    <input id="name" name="name" [(ngModel)]="form.name" placeholder="Enter beneficiary name">
 
-    <label for="accountNumber">Account Number</label>
-    <input id="accountNumber" name="accountNumber" [(ngModel)]="form.accountNumber" placeholder="Enter account number">
+    <!-- NAME -->
+    <label>Beneficiary Name</label>
+    <input 
+      type="text"
+      [(ngModel)]="form.name"
+      name="name"
+      placeholder="Enter beneficiary name"
+      required
+    >
 
-    <label for="bankName">Bank Name</label>
-    <input id="bankName" name="bankName" [(ngModel)]="form.bankName" placeholder="Enter bank name">
+    <!-- ACCOUNT NUMBER -->
+    <label>Account Number</label>
+    <input 
+      type="text"
+      [(ngModel)]="form.accountNumber"
+      name="accountNumber"
+      placeholder="Enter account number"
+      maxlength="18"
+      required
+    >
 
-    <label for="ifscCode">IFSC Code</label>
-    <input id="ifscCode" name="ifscCode" [(ngModel)]="form.ifscCode" placeholder="Enter IFSC code">
+    <!-- BRANCH SELECT -->
+    <label>Bank Branch</label>
+    <select 
+      [(ngModel)]="selectedBranch" 
+      name="branch"
+      (change)="onBranchChange()"
+      required
+    >
+      <option value="">Select Bank Branch</option>
+      <option *ngFor="let b of branches" [value]="b.name">
+        {{ b.name }}
+      </option>
+    </select>
 
+    <!-- IFSC AUTO -->
+    <label>IFSC Code</label>
+    <input 
+      type="text"
+      [(ngModel)]="form.ifscCode"
+      name="ifscCode"
+      readonly
+    >
+
+    <!-- BUTTON -->
     <button type="button" [disabled]="loading" (click)="addBeneficiary()">
       {{ loading ? 'Saving...' : 'Add Beneficiary' }}
     </button>
 
+    <!-- MESSAGES -->
     <p class="success" *ngIf="successMessage">{{ successMessage }}</p>
     <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+
   </form>
 </div>

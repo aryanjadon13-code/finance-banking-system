@@ -1,73 +1,72 @@
 <div class="create-account-page">
-     <div class="form-card">
-          <h2>Create Account</h2>
-          
+  <div class="form-card">
 
-          <!-- Account Type -->
-     
-          <label>Account Type</label>
-          <select>
-               <option>Select Account Type</option>
-               <option>Savings</option>
-                <option>Current</option>
-                 <option>Fixed Deposit</option>
-          </select>
+    <h2>Create Account</h2>
 
-          <!-- Branch -->
-          
-           <label>Branch</label>
-           <select>
-               <option>Select Branch</option>
-               <option>Indore</option>
-               <option>Bhopal</option>
-               <option>Delhi</option>
-               <option>Mumbai</option>
-               <option>Banglore</option>
-           </select>
-           
-
-           <!-- Currency -->
-            <label>Curreny</label>
-            <input type="text" value="INR - Indian Rupee (₹)" disabled >
-<!-- 
-            Intial Deposit -->
-
-            <label>Intial Deposit</label>
-            <input type="number"placeholder="Enter amount (min ₹500)" >
-<!-- Nominee name -->
-               <div class="form-row">
-               <div class="field">
-               <label>Nominee Name </label>
-               <input type="text" placeholder="Enter nominee name" >
-               </div>
-          <!-- Relation -->
-    
-     <div class="field">
-    <label>Nominee Relation *</label>
-    <select>
-      <option>-- Select Relation --</option>
-      <option>Father</option>
-      <option>Mother</option>
-      <option>Brother</option>
-      <option>Sister</option>
-      <option>Spouse</option>
+    <!-- Account Type -->
+    <label>Account Type</label>
+    <select [(ngModel)]="accountType">
+      <option value="">Select Account Type</option>
+      <option>Savings</option>
+      <option>Current</option>
+      <option>Fixed Deposit</option>
     </select>
-</div>
-</div>
-    
 
-    <!-- Purpose -->
-    <label>Purpose (Optional)</label>
-    <select>
-      <option>-- Select Purpose --</option>
-      <option>Personal</option>
-      <option>Business</option>
-      <option>Salary</option>
-      <option>Investment</option>
+    <!-- Branch -->
+    <label>Branch</label>
+    <select [(ngModel)]="branch">
+      <option value="">Select Branch</option>
+      <option>Indore</option>
+      <option>Bhopal</option>
+      <option>Delhi</option>
+      <option>Mumbai</option>
+      <option>Bangalore</option>
     </select>
+
+    <!-- Currency -->
+    <label>Currency</label>
+    <input type="text" [(ngModel)]="currency" disabled>
+
+    <!-- Initial Deposit -->
+    <label>Initial Deposit</label>
+    <input type="number" [(ngModel)]="initialDeposit" placeholder="Enter amount (min ₹500)">
+
+    <!-- Nominee Section -->
+    <div class="form-row">
+
+      <!-- Nominee Name -->
+      <div class="field">
+        <label>Nominee Name</label>
+        <input type="text" [(ngModel)]="nomineeName" placeholder="Enter nominee name">
+      </div>
+
+      <!-- Nominee Relation -->
+      <div class="field">
+        <label>Nominee Relation</label>
+        <select [(ngModel)]="nomineeRelation">
+          <option value="">Select Relation</option>
+          <option>Father</option>
+          <option>Mother</option>
+          <option>Brother</option>
+          <option>Sister</option>
+          <option>Spouse</option>
+        </select>
+      </div>
+
+    </div>
+
+    <!-- PIN -->
+    <label>Enter PIN</label>
+    <input type="password" [(ngModel)]="pin" placeholder="Enter 4-digit PIN">
+
+    <!-- Confirm PIN -->
+    <label>Confirm PIN</label>
+    <input type="password" [(ngModel)]="confirmPin" placeholder="Confirm PIN">
 
     <!-- Button -->
-    <button class="create-btn">Create Account</button>
+    <button class="create-btn" (click)="createAccount()">
+      Create Account
+    </button>
 
-     </div>
+  </div>
 </div>

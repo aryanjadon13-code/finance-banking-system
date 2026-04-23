@@ -25,13 +25,20 @@ constructor(
   public sidebarService: SidebarService   
 ) {}
 
+addBeneficiary(){
+  this.router.navigate(['/dashboard/add-beneficiary']);
+}
   isMainDashboard() {
     return this.router.url === '/dashboard';
   }
-
-goToSendMoney() {
-  this.router.navigate(['/dashboard/send-money']);
+  goToPayments() {
+  this.router.navigate(['/dashboard/payments']);
 }
+
+// goToSendMoney() {
+//   this.router.navigate(['/dashboard/send-money']);
+// }
+
   comingSoonMessage = '';
 showToast = false;
 timeoutRef:any=null;
@@ -87,6 +94,7 @@ getPageTitle() {
     { title: 'Electricity Bill', date: 'Mar 28', amount: 1200, type: 'debit' },
     { title: 'Transfer to Rahul', date: 'Mar 26', amount: 5000, type: 'debit' }
   ];
+ 
 
      this.accounts = [
     { name: 'Savings Account', balance: 218600 },

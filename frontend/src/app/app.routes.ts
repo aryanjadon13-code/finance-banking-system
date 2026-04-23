@@ -16,6 +16,9 @@ import { CreateAccount } from './create-account/create-account';
 import { SendMoney } from './pages/send-money/send-money';
 import { Beneficiaries } from './pages/beneficiaries/beneficiaries';
 import { AddBeneficiary } from './pages/add-beneficiary/add-beneficiary';
+import { Router } from '@angular/router';
+import { EnterPinComponent } from './dashboard/enter-pin/enter-pin';
+
 
 export const routes: Routes = [
 
@@ -27,21 +30,32 @@ export const routes: Routes = [
   { path: 'email-sent', component: EmailSent },
   { path: 'verify-otp', component: verifyOtp },
   { path: 'reset-password', component: ResetPassword },
+  {
+  path: 'dashboard/enter-pin',
+  loadComponent: () =>
+    import('./dashboard/enter-pin/enter-pin').then(m => m.EnterPinComponent)
+},
+{
+  path: 'beneficiaries',
+  component: Beneficiaries
+}
 
-  // ✅ Dashboard route (IMPORTANT)
- {
+  //  Dashboard route (IMPORTANT)
+ ,{
   path: 'dashboard',
   component: Dashboard,
   children: [
     { path: 'transactions', component: Transactions },
     { path: 'accounts', component: Accounts },
-    { path: 'payments', component: Payments },
+  {path:'payments', component: Payments},
     { path: 'profile', component: Profile },
     { path: 'settings', component: Settings },
     { path: 'create-account', component: CreateAccount, data: { title: 'Create Account' } },
     { path: 'send-money', component: SendMoney, data: { title: 'Send Money' } },
     { path: 'beneficiaries', component: Beneficiaries, data: { title: 'Beneficiaries' } },
-    { path: 'add-beneficiary', component: AddBeneficiary, data: { title: 'Add Beneficiary' } }
+    { path: 'add-beneficiary', component: AddBeneficiary, data: { title: 'Add Beneficiary' } },
+   
+   
   ]
 }
 
