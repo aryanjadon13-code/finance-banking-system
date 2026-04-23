@@ -8,19 +8,17 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "accounts")
-@Getter
-@Setter
+@Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true)
     private String accountNumber;
 
     @Enumerated(EnumType.STRING)
@@ -28,15 +26,17 @@ public class Account {
 
     private Double balance;
 
+    private String branchName;
+
+    private String currency;
+
+    private String status;
+
+    private String nomineeName;
+
+    private String pin;
+
     private Long userId;
 
     private LocalDateTime createdAt;
-
-    @Column(nullable = false)
-    private String branchName;
-
-    @Column(nullable = false)
-    private String currency ;
-
-    private String status;
 }

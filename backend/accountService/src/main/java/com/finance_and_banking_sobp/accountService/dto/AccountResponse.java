@@ -13,5 +13,6 @@ public class AccountResponse {
     private Double balance;
     private String branchName;
     private String currency;
+    private String nomineeName;
     private String status;
 }

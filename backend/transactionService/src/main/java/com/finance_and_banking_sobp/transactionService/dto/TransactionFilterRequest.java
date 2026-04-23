@@ -1,18 +1,19 @@
 package com.finance_and_banking_sobp.transactionService.dto;
 
-
 import lombok.Data;
+
+import java.time.LocalDateTime;
 
 @Data
 public class TransactionFilterRequest {
 
-    // CREDIT / DEBIT / ALL
-    private String type;
+    private String accountNumber;
 
-    // LAST_7_DAYS / LAST_MONTH / CUSTOM
-    private String dateFilter;
+    private String type = "ALL";
+    private String dateFilter = "ALL";
 
-    // Used only if CUSTOM
-    private String fromDate;
-    private String toDate;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
+
+    private int page = 0;
 }

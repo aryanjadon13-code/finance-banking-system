@@ -12,8 +12,9 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   // ✅ Register
-  register(name:string , email:string , phone:string , password:string , confirmPassword:string): Observable<any> {
-    return this.http.post(`${this.baseUrl}/register`, {name , email , phone , password , confirmPassword});
+  register(name:string , email:string , phoneNumber:string , password:string , confirmPassword:string): Observable<any> {
+    // Send as 'phoneNumber' to match backend entity
+    return this.http.post(`${this.baseUrl}/register`, {name , email , phoneNumber , password , confirmPassword});
   }
 
   // ✅ Login

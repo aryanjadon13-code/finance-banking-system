@@ -1,10 +1,6 @@
 package com.finance_and_banking_sobp.accountService.service;
 
-
-import com.finance_and_banking_sobp.accountService.dto.AccountResponse;
-import com.finance_and_banking_sobp.accountService.dto.CreateAccountRequest;
-
-import java.util.List;
+import com.finance_and_banking_sobp.accountService.dto.*;
 
 public interface AccountService {
 
@@ -12,7 +8,7 @@ public interface AccountService {
 
     AccountResponse getAccount(String accountNumber);
 
-    List<AccountResponse> getAccountsByUser(Long userId);
-
     void updateBalance(String accountNumber, Double amount);
+
+    void validatePin(PinRequest request);
 }

@@ -14,7 +14,7 @@ export class RegisterComponent {
 
   name: string = '';
   email: string = '';
-  phone: string = '';
+  phoneNumber: string = '';
   password: string = '';
   confirmPassword: string = '';
 
@@ -23,7 +23,7 @@ export class RegisterComponent {
 
   register() {
 
-    this.userService.register(this.name , this.email , this.phone , this.password , this.confirmPassword).subscribe({
+    this.userService.register(this.name , this.email , this.phoneNumber , this.password , this.confirmPassword).subscribe({
       next:(res)=>{
         console.log(res);
       } , 
@@ -44,7 +44,7 @@ export class RegisterComponent {
     const user = {
       name: this.name,
       email: this.email,
-      phone: this.phone,
+      phoneNumber: this.phoneNumber,
       password: this.password,
       accountNumber: "1234567890",
       balance: 50000
