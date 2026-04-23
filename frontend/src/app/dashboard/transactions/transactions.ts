@@ -1,49 +1,56 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TransactionService } from '../../services/transaction.service';
+import { Auth } from '../../services/auth';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-transactions',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule , FormsModule],
   templateUrl: './transactions.html',
   styleUrl: './transactions.css',
 })
-export class Transactions {
+export class Transactions implements OnInit {
 
-  totalBalance = 0;
-  totalIncome = 0;
-  totalExpenses = 0;
+  constructor(
+    private transactionService : TransactionService,
+    private authService : Auth,
+    private cdr : ChangeDetectorRef
+  ){}
 
-  transactions: any[] = [];
+  searchText = "";
+  selectedType = "all";
+  selectedMonth = "all";
+  
+  currentPage = 0;
+
+  transactions : any[] = [];
 
   ngOnInit() {
-    // Dummy data (later API se replace hoga)
-    this.totalBalance = 245800;
-    this.totalIncome = 58500;
-    this.totalExpenses = 18240;
+    this.loadData();
+  }
 
-    this.transactions = [
-     
-  {
-    title: 'Salary Credit',
-    date: 'Apr 1, 2026',
-    type: 'NEFT',
-    amount: 45000,
-    status: 'Completed',
-    category: 'credit'
-  },
-  {
-    title: 'Amazon Shopping',
-    date: 'Mar 31, 2026',
-    type: 'UPI',
-    amount: 2340,
-    status: 'Completed',
-    category: 'debit'
+  loadData(){
+    const userId = Number(this.authService.getUserId());
+    this.transactionService.getTransaction(userId , this.currentPage , this.searchText , this.selectedType , this.selectedMonth).subscribe({
+      next:(res:any)=>{
+        console.log(res);
+        this.transactions =[...res.data]
+        this.cdr.detectChanges();
+
+      },
+      error:(err)=>{
+        console.log(err);
+
+      }
+    })
   }
-,
-      { title: 'Electricity Bill', date: 'Mar 30, 2026', amount: 1200, type: 'debit', status: 'Paid', method: 'AUTO' },
-      { title: 'Transfer to Rahul', date: 'Mar 28, 2026', amount: 5000, type: 'debit', status: 'Completed', method: 'IMPS' },
-      { title: 'Freelance Payment', date: 'Mar 20, 2026', amount: 12000, type: 'credit', status: 'Completed', method: 'NEFT' }
-    ];
+
+
+  onFilterChange(){
+    this.loadData();
+    this.cdr.detectChanges();
   }
+
 }

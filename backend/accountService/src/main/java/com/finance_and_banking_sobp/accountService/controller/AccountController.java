@@ -1,14 +1,11 @@
 package com.finance_and_banking_sobp.accountService.controller;
 
-import com.finance_and_banking_sobp.accountService.dto.AccountResponse;
-import com.finance_and_banking_sobp.accountService.dto.CreateAccountRequest;
+import com.finance_and_banking_sobp.accountService.dto.*;
 import com.finance_and_banking_sobp.accountService.service.AccountService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/accounts")
@@ -18,18 +15,13 @@ public class AccountController {
     private final AccountService service;
 
     @PostMapping
-    public ResponseEntity <AccountResponse> createAccount(@Valid @RequestBody CreateAccountRequest request) {
-        return ResponseEntity.ok(service.createAccount(request)) ;
+    public ResponseEntity<?> create(@Valid @RequestBody CreateAccountRequest request) {
+        return ResponseEntity.ok(service.createAccount(request));
     }
 
     @GetMapping("/{accountNumber}")
-    public AccountResponse getAccount(@PathVariable String accountNumber) {
-        return service.getAccount(accountNumber);
-    }
-
-    @GetMapping("/user/{userId}")
-    public List<AccountResponse> getUserAccounts(@PathVariable Long userId) {
-        return service.getAccountsByUser(userId);
+    public ResponseEntity<?> get(@PathVariable String accountNumber) {
+        return ResponseEntity.ok(service.getAccount(accountNumber));
     }
 
     @PutMapping("/{accountNumber}/balance")
@@ -38,6 +30,8 @@ public class AccountController {
         service.updateBalance(accountNumber, amount);
     }
 
-
+    @PostMapping("/validate-pin")
+    public void validatePin(@RequestBody PinRequest request) {
+        service.validatePin(request);
+    }
 }
-

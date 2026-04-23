@@ -36,10 +36,10 @@ export class Auth {
   // ================= USER ID =================
 
   getUserId(): string {
+
     const storedUserId = localStorage.getItem(this.userIdKey);
 
     if (storedUserId) {
-      console.log('Auth.getUserId(): Found stored userId:', storedUserId);
       return storedUserId;
     }
 
@@ -48,18 +48,17 @@ export class Auth {
 
     if (userId !== undefined && userId !== null) {
       const normalizedUserId = String(userId);
-      console.log('Auth.getUserId(): Parsed from token:', normalizedUserId);
       localStorage.setItem(this.userIdKey, normalizedUserId);
       return normalizedUserId;
     }
 
-    console.warn('Auth.getUserId(): No userId found');
     return '';
   }
 
   // ================= USER EMAIL =================
 
   getUserEmail(): string {
+
     const storedUserEmail = localStorage.getItem(this.userEmailKey);
 
     if (storedUserEmail) {
@@ -106,19 +105,13 @@ export class Auth {
   // ================= JWT PARSER =================
 
   private getTokenPayload(): JwtPayload | null {
+
     const token = this.getToken();
 
-    if (!token) {
-      console.warn('No token available');
-      return null;
-    }
+    if (!token) return null;
 
     const parts = token.split('.');
-
-    if (parts.length < 2) {
-      console.warn('Invalid token format');
-      return null;
-    }
+    if (parts.length < 2) return null;
 
     try {
       const payload = parts[1]
@@ -126,13 +119,9 @@ export class Auth {
         .replace(/_/g, '/');
 
       const decoded = atob(payload);
-      const parsed = JSON.parse(decoded) as JwtPayload;
+      return JSON.parse(decoded) as JwtPayload;
 
-      console.log('Decoded token payload:', parsed);
-      return parsed;
-
-    } catch (e) {
-      console.error('Failed to decode token', e);
+    } catch {
       return null;
     }
   }

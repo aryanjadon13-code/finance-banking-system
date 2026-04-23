@@ -14,7 +14,7 @@
   <p class="error" *ngIf="!loading && errorMessage">{{ errorMessage }}</p>
 
   <div class="empty-state" *ngIf="!loading && !errorMessage && beneficiaries.length === 0">
-    <h3>No beneficiaries added yet</h3>
+    <p>No beneficiaries added yet</p>
     <p>Add a beneficiary to start making transfers faster.</p>
   </div>
 

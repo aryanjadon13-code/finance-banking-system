@@ -11,31 +11,25 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class Transaction {
 
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-        private String transactionId;
-
-        private String accountNumber;
-
-        private String referenceAccount; // samne wale ka account number
-
-        private String type; //credit ya debit
-
-        private String direction; //deposit ya withdrw
-
-        private Double amount;
-
-        private String status; // successful ya failed
-
-        private LocalDateTime createdAt;
-
-    }
-
+    private String transactionId;
+    private String accountNumber;
+    private String referenceAccount;
+    private Double amount;
+    private String type;
+    private String direction;
+    private String status;
+    private String description;
+    private LocalDateTime createdAt;
+    private Long senderUserId;
+    private Long receiverUserId;
+}
 

@@ -1,47 +1,21 @@
 <div class="transactions-page">
 
-  
-  <!-- TOP CARDS -->
-  <div class="cards">
-    <div class="card green">
-      <p>Total Balance</p>
-      <h3>₹{{ totalBalance }}</h3>
-    </div>
-
-    <div class="card blue">
-      <p>Total Income</p>
-      <h3>₹{{ totalIncome }}</h3>
-    </div>
-
-    <div class="card red">
-      <p>Total Expenses</p>
-      <h3>₹{{ totalExpenses }}</h3>
-    </div>
-  </div>
 
   <!-- SEARCH + FILTER -->
   <div class="filters">
-    <input type="text" placeholder="Search transactions..." />
-    <select>
-      <option>All types</option>
-      <option>Credit</option>
-      <option>Debit</option>
+    <input type="text" placeholder="Search transactions..."  [(ngModel)]="searchText" (input)="onFilterChange()"/>
+    <select [(ngModel)]="selectedType" (change)="onFilterChange()">
+      <option value="all">All types</option>
+      <option value="credit">Credit</option>
+      <option value="debit">Debit</option>
     </select>
 
-      <select>
-    <option>All status</option>
-    <option>Completed</option>
-    <option>Pending</option>
-    <option>Failed</option>
-  </select>
-
   
-      <select>
-    <option>Month</option>
-    <option>This month</option>
-    <option>Last 7 days</option>
-    <option>This 3 Months</option>
-    <option>Custom range</option>
+      <select [(ngModel)]="selectedMonth" (change)="onFilterChange()">
+    <option value = "all">Month</option>
+    <option value="this_month">This month</option>
+    <option value="last_7_days">Last 7 days</option>
+    <option value="last_3_months">This 3 Months</option>
   </select>
 
   </div>
@@ -59,7 +33,7 @@
 
   <!-- Left -->
   <div class="left">
-    <p class="title">{{ t.title }}</p>
+    <p class="title">{{ t.name }}</p>
     <span class="date">{{ t.date }}</span>
   </div>
 
@@ -70,14 +44,19 @@
 
   <!-- Amount -->
   <div class="amount"
-       [class.green]="t.category === 'credit'"
-       [class.red]="t.category === 'debit'">
-    {{ t.category === 'credit' ? '+' : '-' }}₹{{ t.amount }}
+       [class.green]="t.type === 'credit'"
+       [class.red]="t.type === 'debit'">
+    ₹{{ t.amount }}
   </div>
 
   <!-- Status -->
   <div class="status">
     {{ t.status }}
+  </div>
+
+
+  <div *ngIf="this.transactions.length === 0">
+    <h2> No Transactions exists</h2>
   </div>
 
 </div>

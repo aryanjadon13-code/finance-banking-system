@@ -1,109 +1,105 @@
 package com.finance_and_banking_sobp.accountService.service;
 
-import com.finance_and_banking_sobp.accountService.TransactionClient;
-import com.finance_and_banking_sobp.accountService.dto.AccountResponse;
-import com.finance_and_banking_sobp.accountService.dto.CreateAccountRequest;
-import com.finance_and_banking_sobp.accountService.dto.TransactionRequest;
+import com.finance_and_banking_sobp.accountService.dto.*;
 import com.finance_and_banking_sobp.accountService.entity.Account;
-import com.finance_and_banking_sobp.accountService.exception.AccountNotFoundException;
-import com.finance_and_banking_sobp.accountService.exception.InsufficientBalanceException;
+import com.finance_and_banking_sobp.accountService.exception.*;
 import com.finance_and_banking_sobp.accountService.models.AccountType;
 import com.finance_and_banking_sobp.accountService.repository.AccountRepository;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Random;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class AccountServiceImpl implements AccountService{
-    
-    private final AccountRepository accountRepository;
-    private final TransactionClient transactionClient;
-    
+public class AccountServiceImpl implements AccountService {
+
+    private final AccountRepository repo;
+    private final BCryptPasswordEncoder encoder;
+
     @Override
     public AccountResponse createAccount(CreateAccountRequest request) {
 
-        if (request.getInitialDeposit()==null || request.getInitialDeposit()<1000){
-            throw new RuntimeException("initial deposite must be greater than 500 rupees");
-        }
-        if (request.getBranchName() == null || request.getBranchName().isEmpty()) {
-            throw new RuntimeException("Branch name is required");
-        }
-
-        Account account =Account.builder()
+        Account account = Account.builder()
                 .accountNumber(generateAccountNumber())
-                .accountType(AccountType.valueOf(request.getAccountType().name()))
-                .balance(0.0)
+                .accountType(AccountType.valueOf(request.getAccountType().toUpperCase()))
+                .balance(request.getInitialDeposit())
                 .branchName(request.getBranchName())
-                .currency(
-                        request.getCurrency()==null || request.getCurrency().isEmpty()
-                ?"INR"
-                        : request.getCurrency())
+                .currency("INR")
                 .status("ACTIVE")
-                .userId(1L)
+                .nomineeName(request.getNomineeName())
+                .pin(encoder.encode(request.getPin()))
+                .userId(request.getUserId())
                 .createdAt(LocalDateTime.now())
                 .build();
-        accountRepository.save(account);
 
-        if (request.getInitialDeposit() !=null && request.getInitialDeposit()>500){
+        repo.save(account);
 
-            TransactionRequest transactionRequest = new TransactionRequest();
-            transactionRequest.setAccountNumber(account.getAccountNumber());
-            transactionRequest.setAmount(request.getInitialDeposit());
-
-            transactionClient.deposit(transactionRequest);
-        }
-
-        return maptoResponse(account);
+        return map(account);
     }
-
 
     @Override
     public AccountResponse getAccount(String accountNumber) {
-        Account account = accountRepository.findByAccountNumber(accountNumber).orElseThrow(()->new RuntimeException("Account not found"));
-        return maptoResponse(account);
-    }
-
-    @Override
-    public List<AccountResponse> getAccountsByUser(Long userId) {
-        return accountRepository.findByUserId(userId)
-                .stream()
-                .map(this::maptoResponse)
-                .collect(Collectors.toList());
+        return map(find(accountNumber));
     }
 
     @Override
     public void updateBalance(String accountNumber, Double amount) {
-        Account account =accountRepository.findByAccountNumber(accountNumber)
-                .orElseThrow(()->new AccountNotFoundException("Account not found"));
 
-        double newBalance = account.getBalance() + amount;
-        if (newBalance < 0){
-            throw new InsufficientBalanceException("insufficient balance");
+        Account acc = find(accountNumber);
+
+        double newBalance = acc.getBalance() + amount;
+
+        if (newBalance < 0) {
+            throw new InsufficientBalanceException("Insufficient balance");
         }
-        account.setBalance(newBalance);
-        accountRepository.save(account);
+
+        acc.setBalance(newBalance);
+        repo.save(acc);
     }
 
+    @Override
+    public void validatePin(PinRequest request) {
 
-    private AccountResponse maptoResponse(Account account) {
+        Account acc = find(request.getAccountNumber());
+
+        if (!encoder.matches(request.getPin(), acc.getPin())) {
+            throw new InvalidPinException("Invalid PIN");
+        }
+    }
+
+    private Account find(String accNo) {
+        return repo.findByAccountNumber(accNo)
+                .orElseThrow(() -> new AccountNotFoundException("Account not found"));
+    }
+
+    private AccountResponse map(Account acc) {
         return AccountResponse.builder()
-                .accountNumber(account.getAccountNumber())
-                .accountType(account.getAccountType().name())
-                .balance(account.getBalance())
-                .status(account.getStatus())
-                .branchName(account.getBranchName())
-                .currency(account.getCurrency())
+                .accountNumber(acc.getAccountNumber())
+                .accountType(acc.getAccountType().name())
+                .balance(acc.getBalance())
+                .branchName(acc.getBranchName())
+                .currency(acc.getCurrency())
+                .nomineeName(acc.getNomineeName())
+                .status(acc.getStatus())
+                .userId(acc.getUserId())
                 .build();
     }
 
     private String generateAccountNumber() {
-        String year = String.valueOf(java.time.Year.now().getValue());
-        int random = (int)(Math.random() * 900000) + 100000;
-        return "ACC" + year + random;
+        LocalDate now = LocalDate.now();
+
+        int year = now.getYear();
+        int month = now.getMonthValue();
+
+        String formattedMonth = String.format("%02d", month);
+
+        int randomNumber = 1000 + new Random().nextInt(9000);
+
+        return "ACC" + year + formattedMonth + randomNumber;
     }
 }

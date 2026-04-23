@@ -1,4 +1,6 @@
-package com.finance_and_banking_sobp.userService.config;
+package com.finance_and_banking_sobp.transactionService.cofig;
+
+
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,15 +13,21 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        return http
-                //  disable CSRF
+        http
+                // Disable CSRF (important for Postman / APIs)
                 .csrf(csrf -> csrf.disable())
+                .cors(cors -> {})
+                // Disable default login form
+                .formLogin(form -> form.disable())
 
-                //  allow everything (gateway will secure)
+                // Disable basic auth popup
+                .httpBasic(basic -> basic.disable())
+
+                // Allow all requests
                 .authorizeHttpRequests(auth -> auth
                         .anyRequest().permitAll()
-                )
+                );
 
-                .build();
+        return http.build();
     }
 }

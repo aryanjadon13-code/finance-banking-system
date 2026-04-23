@@ -1,26 +1,28 @@
 package com.finance_and_banking_sobp.accountService.dto;
 
-import com.finance_and_banking_sobp.accountService.models.AccountType;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import lombok.Data;
 
+import jakarta.validation.constraints.*;
+import lombok.Data;
 
 @Data
 public class CreateAccountRequest {
 
-//    @NotNull
-//    private Long userId;
+    @NotNull
+    private Long userId;
 
-    private AccountType accountType;
+    @NotBlank
+    private String accountType;
 
-    @NotBlank(message = "Branch name is required")
+    @NotBlank
     private String branchName;
 
-    private String currency;
+    @NotBlank
+    private String nomineeName;
+
+    @NotBlank
+    private String pin;
 
     @NotNull
-    @Positive(message = "Initial Deposit must be greater than 0 ")
+    @Min(value = 500, message = "Minimum deposit is 500")
     private Double initialDeposit;
 }

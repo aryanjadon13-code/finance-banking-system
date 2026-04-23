@@ -5,7 +5,6 @@ import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
-import java.util.Date;
 
 @Component
 public class JwtUtil {
@@ -14,6 +13,7 @@ public class JwtUtil {
 
     private final Key key = Keys.hmacShaKeyFor(SECRET.getBytes());
 
+    // ✅ Validate token
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder()
@@ -22,7 +22,17 @@ public class JwtUtil {
                     .parseClaimsJws(token);
             return true;
         } catch (Exception e) {
+            System.out.println("JWT validation failed: " + e.getMessage());
             return false;
         }
+    }
+
+    // ✅ Extract claims (userId, email, etc.)
+    public Claims extractClaims(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
     }
 }

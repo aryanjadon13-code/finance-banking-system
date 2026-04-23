@@ -14,7 +14,7 @@ export class RegisterComponent {
 
   name: string = '';
   email: string = '';
-  phone: string = '';
+  phoneNumber: string = '';
   password: string = '';
   confirmPassword: string = '';
 
@@ -22,19 +22,32 @@ export class RegisterComponent {
 
   register() {
 
-    //  Name validation
-    const nameRegex = /^[A-Za-z ]+$/;
-    if (!nameRegex.test(this.name)) {
-      alert('Name should contain only letters');
+    this.userService.register(this.name , this.email , this.phoneNumber , this.password , this.confirmPassword).subscribe({
+      next:(res)=>{
+        console.log(res);
+      } , 
+      error :(err)=>{
+        console.log(err);
+      }
+    });
+
+
+
+
+
+    if (this.password !== this.confirmPassword) {
+      alert("Passwords do not match");
       return;
     }
 
-    //  Phone validation
-    const phoneRegex = /^[0-9]{10}$/;
-    if (!phoneRegex.test(this.phone)) {
-      alert('Phone number must be 10 digits');
-      return;
-    }
+    const user = {
+      name: this.name,
+      email: this.email,
+      phoneNumber: this.phoneNumber,
+      password: this.password,
+      accountNumber: "1234567890",
+      balance: 50000
+    };
 
     //  Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -60,7 +73,7 @@ export class RegisterComponent {
     this.userService.register(
       this.name,
       this.email,
-      this.phone,
+      this.phoneNumber,
       this.password,
       this.confirmPassword
     ).subscribe({
@@ -71,7 +84,7 @@ export class RegisterComponent {
         const user = {
           name: this.name,
           email: this.email,
-          phone: this.phone
+          phone: this.phoneNumber
         };
 
         localStorage.setItem('user', JSON.stringify(user));
