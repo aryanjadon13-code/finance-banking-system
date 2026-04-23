@@ -16,7 +16,7 @@ public class SecurityConfig {
         http
                 // Disable CSRF (important for Postman / APIs)
                 .csrf(csrf -> csrf.disable())
-
+                .cors(cors -> {})
                 // Disable default login form
                 .formLogin(form -> form.disable())
 

@@ -86,6 +86,7 @@ public class AccountServiceImpl implements AccountService {
                 .currency(acc.getCurrency())
                 .nomineeName(acc.getNomineeName())
                 .status(acc.getStatus())
+                .userId(acc.getUserId())
                 .build();
     }
 

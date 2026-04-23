@@ -15,4 +15,5 @@ public class AccountResponse {
     private String currency;
     private String nomineeName;
     private String status;
+    private Long userId;
 }

@@ -16,8 +16,12 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
-            "browser": "src/main.ts",
-            "tsConfig": "tsconfig.app.json",
+             "outputPath": "dist/frontend",
+              "index": "src/index.html",
+             "browser": "src/main.ts",
+             "tsConfig": "tsconfig.app.json",
+               "scripts": [],
+
             "assets": [
               {
                 "glob": "**/*",
@@ -27,14 +31,8 @@
             "styles": [
               "src/styles.css"
             ],
-            "server": "src/main.server.ts",
-            "outputMode": "server",
-            "security": {
-              "allowedHosts": []
-            },
-            "ssr": {
-              "entry": "src/server.ts"
-            }
+            "ssr": false,
+            "prerender": false  
           },
           "configurations": {
             "production": {

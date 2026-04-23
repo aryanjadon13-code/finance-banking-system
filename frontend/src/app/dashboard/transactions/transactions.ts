@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TransactionService } from '../../services/transaction.service';
+import { Auth } from '../../services/auth';
 
 @Component({
   selector: 'app-transactions',
@@ -8,42 +10,39 @@ import { CommonModule } from '@angular/common';
   templateUrl: './transactions.html',
   styleUrl: './transactions.css',
 })
-export class Transactions {
+export class Transactions implements OnInit {
+
+  constructor(
+    private transactionService : TransactionService,
+    private authService : Auth,
+    private cdr : ChangeDetectorRef
+  ){}
 
   totalBalance = 0;
   totalIncome = 0;
   totalExpenses = 0;
+  currentPage = 0;
+  title = "";
 
-  transactions: any[] = [];
+  transactions : any[] = [];
 
   ngOnInit() {
-    // Dummy data (later API se replace hoga)
-    this.totalBalance = 245800;
-    this.totalIncome = 58500;
-    this.totalExpenses = 18240;
-
-    this.transactions = [
-     
-  {
-    title: 'Salary Credit',
-    date: 'Apr 1, 2026',
-    type: 'NEFT',
-    amount: 45000,
-    status: 'Completed',
-    category: 'credit'
-  },
-  {
-    title: 'Amazon Shopping',
-    date: 'Mar 31, 2026',
-    type: 'UPI',
-    amount: 2340,
-    status: 'Completed',
-    category: 'debit'
+    this.loadData();
   }
-,
-      { title: 'Electricity Bill', date: 'Mar 30, 2026', amount: 1200, type: 'debit', status: 'Paid', method: 'AUTO' },
-      { title: 'Transfer to Rahul', date: 'Mar 28, 2026', amount: 5000, type: 'debit', status: 'Completed', method: 'IMPS' },
-      { title: 'Freelance Payment', date: 'Mar 20, 2026', amount: 12000, type: 'credit', status: 'Completed', method: 'NEFT' }
-    ];
+
+  loadData(){
+    const userId = Number(this.authService.getUserId());
+    this.transactionService.getTransaction(userId , this.currentPage).subscribe({
+      next:(res:any)=>{
+        console.log(res);
+        this.transactions =[...res.data]
+        this.cdr.detectChanges();
+
+      },
+      error:(err)=>{
+        console.log(err);
+
+      }
+    })
   }
 }

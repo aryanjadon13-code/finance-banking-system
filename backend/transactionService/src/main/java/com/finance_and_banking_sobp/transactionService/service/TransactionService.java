@@ -22,17 +22,17 @@ public class TransactionService {
     // ================= DEPOSIT =================
     public ApiResponse<?> deposit(TransactionRequest request) {
 
+        AccountResponse acc = accountClient.getAccount(request.getAccountNumber());
         accountClient.updateBalance(request.getAccountNumber(), request.getAmount());
 
         save(request.getAccountNumber(), null, request.getAmount(),
-                "DEPOSIT", "CREDIT", "SUCCESS", request.getDescription());
+                "DEPOSIT", "CREDIT", "SUCCESS", request.getDescription(),acc.getUserId(),null );
 
         return success("Deposit successful");
     }
 
     // ================= WITHDRAW =================
     public ApiResponse<?> withdraw(TransactionRequest request) {
-
         AccountResponse acc = accountClient.getAccount(request.getAccountNumber());
 
         if (acc.getBalance() < request.getAmount()) {
@@ -42,7 +42,7 @@ public class TransactionService {
         accountClient.updateBalance(request.getAccountNumber(), -request.getAmount());
 
         save(request.getAccountNumber(), null, request.getAmount(),
-                "WITHDRAW", "DEBIT", "SUCCESS", request.getDescription());
+                "WITHDRAW", "DEBIT", "SUCCESS", request.getDescription(),acc.getUserId(),null);
 
         return success("Withdraw successful");
     }
@@ -57,6 +57,7 @@ public class TransactionService {
         accountClient.validatePin(new PinRequest(request.getFromAccount(), request.getPin()));
 
         AccountResponse sender = accountClient.getAccount(request.getFromAccount());
+        AccountResponse receiver = accountClient.getAccount(request.getToAccount());
 
         if (sender.getBalance() < request.getAmount()) {
             throw new InsufficientBalanceException("Insufficient balance");
@@ -66,10 +67,12 @@ public class TransactionService {
         accountClient.updateBalance(request.getToAccount(), request.getAmount());
 
         save(request.getFromAccount(), request.getToAccount(),
-                request.getAmount(), "TRANSFER", "DEBIT", "SUCCESS", request.getDescription());
+                request.getAmount(), "TRANSFER", "DEBIT", "SUCCESS", request.getDescription(),sender.getUserId(),
+                receiver.getUserId());
 
         save(request.getToAccount(), request.getFromAccount(),
-                request.getAmount(), "TRANSFER", "CREDIT", "SUCCESS", request.getDescription());
+                request.getAmount(), "TRANSFER", "CREDIT", "SUCCESS", request.getDescription() , sender.getUserId(),
+                receiver.getUserId());
 
         return success("Transfer successful");
     }
@@ -133,7 +136,7 @@ public class TransactionService {
     }
 
     private void save(String acc, String ref, Double amt,
-                      String type, String dir, String status, String desc) {
+                      String type, String dir, String status, String desc, Long senderId, Long receiverId) {
 
         repo.save(Transaction.builder()
                 .transactionId(UUID.randomUUID().toString())
@@ -144,7 +147,10 @@ public class TransactionService {
                 .direction(dir)
                 .status(status)
                 .description(desc)
+                        .receiverUserId(receiverId)
+                        .senderUserId(senderId)
                 .createdAt(LocalDateTime.now())
+
                 .build());
     }
 
@@ -152,6 +158,37 @@ public class TransactionService {
         return ApiResponse.builder()
                 .status("SUCCESS")
                 .message(msg)
+                .build();
+    }
+
+
+    public ApiResponse<?> getTransactionsByUser(Long userId, int page) {
+
+        Pageable pageable = PageRequest.of(page, 5, Sort.by("createdAt").descending());
+
+        Page<Transaction> pageResult =
+                repo.findBySenderUserIdOrReceiverUserId(userId, userId, pageable);
+
+        List<TransactionViewResponse> data = pageResult.stream().map(txn -> {
+
+            String amount = txn.getDirection().equals("CREDIT")
+                    ? "+₹" + txn.getAmount()
+                    : "-₹" + txn.getAmount();
+
+            return TransactionViewResponse.builder()
+                    .name(txn.getDescription() != null ? txn.getDescription() : "Transaction")
+                    .type(txn.getDirection().toLowerCase())
+                    .amount(amount)
+                    .status(txn.getStatus().equals("SUCCESS") ? "Completed" : "Failed")
+                    .date(txn.getCreatedAt().toLocalDate().toString())
+                    .build();
+
+        }).toList();
+
+        return ApiResponse.builder()
+                .status("SUCCESS")
+                .message("Transactions fetched")
+                .data(data)
                 .build();
     }
 }

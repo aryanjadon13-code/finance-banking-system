@@ -19,4 +19,9 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
     Page<Transaction> findByAccountNumberAndDirectionAndCreatedAtBetween(
             String accountNumber, String direction,
             LocalDateTime start, LocalDateTime end, Pageable pageable);
+    Page<Transaction> findBySenderUserIdOrReceiverUserId(
+            Long senderUserId,
+            Long receiverUserId,
+            Pageable pageable
+    );
 }

@@ -77,13 +77,14 @@ export class AddBeneficiary {
     }
 
     // ✅ ACCOUNT VALIDATION
-    if (!/^[0-9]{9,18}$/.test(this.form.accountNumber)) {
-      this.errorMessage = 'Account number must be 9–18 digits.';
-      return;
-    }
+    if (!/^ACC[0-9]{6,15}$/.test(this.form.accountNumber)) {
+    this.errorMessage = 'Account number must start with "ACC" and be 9–18 total characters.';
+    return;
+}
 
     // ✅ IFSC VALIDATION
-    if (!/^[A-Z]{4}0[0-9]{6}$/.test(this.form.ifscCode)) {
+    const ifscPattern = /^[A-Z]{4}0[A-Z0-9]{6}$/;
+    if (ifscPattern.test(this.form.ifscCode)) {
       this.errorMessage = 'Invalid IFSC format (Example: SBIN0001234)';
       return;
     }
@@ -99,6 +100,8 @@ export class AddBeneficiary {
     }
 
     this.loading = true;
+
+    console.log("form fields : " , this.form);
 
     this.beneficiaryService.addBeneficiary(this.form)
       .pipe(finalize(() => this.loading = false))

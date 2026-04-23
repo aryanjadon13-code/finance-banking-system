@@ -3,10 +3,12 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Auth } from '../../services/auth';
 import { UserService } from '../../services/user-service';
+import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-reset-password',
-  imports: [FormsModule],
+  imports: [FormsModule , CommonModule],
   templateUrl: './reset-password.html',
   styleUrl: './reset-password.css',
 })

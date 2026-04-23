@@ -29,5 +29,7 @@ public class Transaction {
     private String status;
     private String description;
     private LocalDateTime createdAt;
+    private Long senderUserId;
+    private Long receiverUserId;
 }
 

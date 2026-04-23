@@ -59,7 +59,7 @@
 
   <!-- Left -->
   <div class="left">
-    <p class="title">{{ t.title }}</p>
+    <p class="title">{{ t.name }}</p>
     <span class="date">{{ t.date }}</span>
   </div>
 
@@ -70,14 +70,19 @@
 
   <!-- Amount -->
   <div class="amount"
-       [class.green]="t.category === 'credit'"
-       [class.red]="t.category === 'debit'">
-    {{ t.category === 'credit' ? '+' : '-' }}₹{{ t.amount }}
+       [class.green]="t.type === 'credit'"
+       [class.red]="t.type === 'debit'">
+    ₹{{ t.amount }}
   </div>
 
   <!-- Status -->
   <div class="status">
     {{ t.status }}
+  </div>
+
+
+  <div *ngIf="this.transactions.length === 0">
+    <h2> No Transactions exists</h2>
   </div>
 
 </div>
