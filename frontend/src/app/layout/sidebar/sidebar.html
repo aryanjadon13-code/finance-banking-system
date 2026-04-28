@@ -1,79 +1,69 @@
-<div class="sidebar"[class.active]="sidebarService.isOpen">
-  <div class="logo">
-    <img src="sobp.png" alt="logo">
-    <h2>SecureBank</h2>
+<div class="sidebar" [class.active]="sidebarService.isOpen">
+  <div class="sidebar-top">
+    <div class="logo">
+      <img src="sobp.png" alt="logo">
+      <h2>SecureBank</h2>
+    </div>
+    <p class="sub">Online Banking Portal</p>
+
+    <h4 class="menu-title">MAIN MENU</h4>
+
+    <ul class="menu">
+      <li>
+        <a routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <i class="fas fa-chart-line"></i>
+          <span>Dashboard</span>
+        </a>
+      </li>
+
+      <li>
+        <a routerLink="/dashboard/transactions" routerLinkActive="active">
+          <i class="fas fa-receipt"></i>
+          <span>Transactions</span>
+        </a>
+      </li>
+
+      <li>
+        <a routerLink="/dashboard/accounts" routerLinkActive="active">
+          <i class="fas fa-university"></i>
+          <span>Accounts</span>
+        </a>
+      </li>
+
+      <li>
+        <a routerLink="/dashboard/payments" routerLinkActive="active">
+          <i class="fas fa-credit-card"></i>
+          <span>Payments</span>
+        </a>
+      </li>
+
+      <li>
+        <a routerLink="/dashboard/beneficiaries" routerLinkActive="active">
+          <i class="fas fa-users"></i>
+          <span>Beneficiaries</span>
+        </a>
+      </li>
+
+      <li>
+        <a routerLink="/dashboard/profile" routerLinkActive="active">
+          <i class="fas fa-user-circle"></i>
+          <span>Profile</span>
+        </a>
+      </li>
+
+      <li>
+        <a routerLink="/dashboard/settings" routerLinkActive="active">
+          <i class="fas fa-cog"></i>
+          <span>Settings</span>
+        </a>
+      </li>
+    </ul>
   </div>
-  
-  <p class="sub">Online Banking Portal</p>
 
-  <h4 class="menu-title">MAIN MENU</h4>
-
-  <ul class="menu">
-
-    <li>
-      <i class="fas fa-chart-line"></i>
-      <a routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-        Dashboard
-      </a>
-    </li>
-
-    <li>
-      <i class="fas fa-receipt"></i>
-      <a routerLink="/dashboard/transactions" routerLinkActive="active">
-        Transactions
-      </a>
-    </li>
-
-    <li>
-      <i class="fas fa-university"></i>
-      <a routerLink="/dashboard/accounts" routerLinkActive="active">
-        Accounts
-      </a>
-    </li>
-
-    <li>
-      <i class="fas fa-credit-card"></i>
-      <a routerLink="/dashboard/payments" routerLinkActive="active">
-        Payments
-      </a>
-    </li>
-
-    <li>
-      <i class="fas fa-cog"></i>
-      <a routerLink="/dashboard/beneficiaries"routerLinkActive="active">
-      Beneficiaries
-      </a>
-    </li>
-
-
-    <!-- <li class="section">SETTINGS</li>
-
-    <li>
-      <i class="fas fa-user"></i>
-      <a routerLink="/dashboard/profile" routerLinkActive="active">
-        Profile
-      </a>
-    </li> -->
-
-     <li>
-      <i class="fas fa-cog"></i>
-      <a routerLink="/dashboard/profile" routerLinkActive="active">
-        Profile
-      </a>
-    </li>
-
-    <li>
-      <i class="fas fa-cog"></i>
-      <a routerLink="/dashboard/settings" routerLinkActive="active">
-        Settings
-      </a>
-    </li>
+  <div class="sidebar-bottom">
     <div class="logout-btn" (click)="logout()">
-   Logout
-</div>
-
-     
-
-  </ul>
-
+      <i class="fas fa-sign-out-alt"></i>
+      <span>Logout</span>
+    </div>
+  </div>
 </div>

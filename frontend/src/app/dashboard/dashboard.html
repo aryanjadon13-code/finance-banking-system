@@ -60,7 +60,7 @@
 
   <!-- LEFT: Chart -->
   <div class="left">
-    <app-chart></app-chart>
+    <app-chart [transactions]="transactions"></app-chart>
   </div>
 
   <!-- RIGHT: Quick Actions -->
@@ -111,24 +111,24 @@
   <div class="transactions">
     <div class="card-header">
       <h3>Recent Transactions</h3>
-      <!-- <span class="view-all">View All →</span> -->
+      <span class="view-all" (click)="router.navigate(['/dashboard/transactions'])" style="cursor:pointer">View All →</span>
     </div>
 
-    
-    <div class="transaction-item" *ngFor="let t of transactions">
-  <div>
-    <p>{{ t.title }}</p>
-    <span>{{ t.date }}</span>
-  </div>
+    <div *ngIf="transactions.length === 0" class="empty-state">
+      <i class="fas fa-receipt" style="font-size:2rem; color:#aaa; margin-bottom:8px;"></i>
+      <p>No transactions yet</p>
+    </div>
 
-  <h4 [class.green]="t.type === 'credit'"
-      [class.red]="t.type === 'debit'">
-
-    {{ t.type === 'credit' ? '+' : '-' }}₹{{ t.amount }}
-
-  </h4>
-</div>
-    
+    <div class="transaction-item" *ngFor="let t of transactions | slice:0:5">
+      <div>
+        <p>{{ t.title }}</p>
+        <span>{{ t.date }}</span>
+      </div>
+      <h4 [class.green]="t.type === 'credit'"
+          [class.red]="t.type === 'debit'">
+        {{ t.type === 'credit' ? '+' : '-' }}₹{{ t.amount }}
+      </h4>
+    </div>
 
   </div>
 

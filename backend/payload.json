@@ -1,0 +1,9 @@
+{
+  "userId": 1,
+  "accountType": "SAVINGS",
+  "branchName": "Main",
+  "initialDeposit": 1000,
+  "nomineeName": "Alice",
+  "nomineeRelation": "Sister",
+  "pin": "1234"
+}

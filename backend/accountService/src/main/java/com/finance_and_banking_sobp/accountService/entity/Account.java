@@ -34,6 +34,8 @@ public class Account {
 
     private String nomineeName;
 
+    private String nomineeRelation;
+
     private String pin;
 
     private Long userId;

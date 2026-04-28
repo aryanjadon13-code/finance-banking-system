@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Auth } from './auth';
+import { Observable } from 'rxjs';
 
 
 
@@ -26,6 +27,12 @@ export class TransactionService {
   }
 
 
+
+  transfer(data: any): Observable<any> {
+    return this.http.post(`${this.baseUrl.replace('/user', '')}/transfer`, data, {
+      headers: this.buildHeaders()
+    });
+  }
 
    private buildHeaders(): HttpHeaders {
     return new HttpHeaders({

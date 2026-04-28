@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { AccountService } from '../services/account.service';
+import { Auth } from '../services/auth';
 @Component({
   selector: 'app-create-account',
   imports: [FormsModule],
@@ -10,7 +12,11 @@ import { FormsModule } from '@angular/forms';
 
 })
 export class CreateAccount {
-  constructor( private router: Router) {}
+  constructor(
+    private router: Router,
+    private accountService: AccountService,
+    private auth: Auth
+  ) {}
 
 accountType = '';
 branch = '';
@@ -35,23 +41,32 @@ createAccount() {
     return;
   }
 
-  
+  const userId = this.auth.getUserId();
+  if (!userId) {
+    alert('User not logged in');
+    return;
+  }
+
   //SAVE ACCOUNT
   const account = {
-    type: this.accountType,
-    branch: this.branch,
-    balance: this.initialDeposit,
-    nominee: this.nomineeName,
-    relation: this.nomineeRelation,
-    pin: this.pin   // SAVE HO RAHA HAI
+    userId: parseInt(userId, 10),
+    accountType: this.accountType,
+    branchName: this.branch,
+    initialDeposit: this.initialDeposit,
+    nomineeName: this.nomineeName,
+    nomineeRelation: this.nomineeRelation,
+    pin: this.pin
   };
 
-  localStorage.setItem('account', JSON.stringify(account));
-
-  // success message
-  alert('Account created successfully ');
-
-  // redirect
-  this.router.navigate(['/dashboard']);
+  this.accountService.createAccount(account).subscribe({
+    next: (res) => {
+      alert('Account created successfully');
+      this.router.navigate(['/dashboard']);
+    },
+    error: (err) => {
+      console.error(err);
+      alert('Failed to create account. Please try again.');
+    }
+  });
 }
 }

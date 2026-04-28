@@ -1,34 +1,62 @@
-.send-money-page {
-  display: flex;
-  justify-content: center;
-  padding: 30px;
+.dashboard-container {
+  padding: 20px;
+  color: white;
 }
 
-.form-card {
-  width: 400px;
-  background: rgba(20, 60, 45, 0.95);
+.emerald-card {
+  background: #0f2e22;
+  border-radius: 16px;
   padding: 25px;
-  border-radius: 15px;
+  border: 1px solid #1f3d2b;
+  position: relative;
+  overflow: hidden;
+}
+
+.emerald-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: #22c55e;
+}
+
+.card-header h3 {
+  font-size: 18px;
+  margin-bottom: 20px;
   color: white;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: #9ca3af;
 }
 
 input, select {
-  padding: 10px;
+  width: 100%;
+  padding: 12px;
   border-radius: 8px;
-  border: none;
-  background: #1e4d3a;
+  border: 1px solid #1f3d2b;
+  background: #1a3d2e;
   color: white;
+  margin-bottom: 15px;
 }
 
 button {
-  margin-top: 10px;
+  width: 100%;
   padding: 12px;
-  background: #22c55e;
+  background: #086329;
+  color: white;
   border: none;
   border-radius: 8px;
-  font-weight: bold;
+  font-weight: 600;
   cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #0a7a33;
 }

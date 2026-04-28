@@ -31,6 +31,16 @@ public class TransactionService {
         return success("Deposit successful");
     }
 
+    // ================= RECORD ONLY (No Balance Update) =================
+    public ApiResponse<?> record(TransactionRequest request) {
+        AccountResponse acc = accountClient.getAccount(request.getAccountNumber());
+        
+        save(request.getAccountNumber(), null, request.getAmount(),
+                "INITIAL_DEPOSIT", "CREDIT", "SUCCESS", request.getDescription(), acc.getUserId(), null);
+
+        return success("Transaction recorded");
+    }
+
     // ================= WITHDRAW =================
     public ApiResponse<?> withdraw(TransactionRequest request) {
         AccountResponse acc = accountClient.getAccount(request.getAccountNumber());

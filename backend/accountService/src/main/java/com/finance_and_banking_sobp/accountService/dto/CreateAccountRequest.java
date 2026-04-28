@@ -20,6 +20,9 @@ public class CreateAccountRequest {
     private String nomineeName;
 
     @NotBlank
+    private String nomineeRelation;
+
+    @NotBlank
     private String pin;
 
     @NotNull

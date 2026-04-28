@@ -1,25 +1,31 @@
 package com.finance_and_banking_sobp.accountService.service;
 
+import com.finance_and_banking_sobp.accountService.TransactionClient;
 import com.finance_and_banking_sobp.accountService.dto.*;
 import com.finance_and_banking_sobp.accountService.entity.Account;
 import com.finance_and_banking_sobp.accountService.exception.*;
 import com.finance_and_banking_sobp.accountService.models.AccountType;
 import com.finance_and_banking_sobp.accountService.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Random;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AccountServiceImpl implements AccountService {
 
     private final AccountRepository repo;
     private final BCryptPasswordEncoder encoder;
+    private final TransactionClient transactionClient;
 
     @Override
     public AccountResponse createAccount(CreateAccountRequest request) {
@@ -32,6 +38,7 @@ public class AccountServiceImpl implements AccountService {
                 .currency("INR")
                 .status("ACTIVE")
                 .nomineeName(request.getNomineeName())
+                .nomineeRelation(request.getNomineeRelation())
                 .pin(encoder.encode(request.getPin()))
                 .userId(request.getUserId())
                 .createdAt(LocalDateTime.now())
@@ -39,12 +46,32 @@ public class AccountServiceImpl implements AccountService {
 
         repo.save(account);
 
+        // Record the initial deposit as a transaction
+        try {
+            if (request.getInitialDeposit() != null && request.getInitialDeposit() > 0) {
+                transactionClient.record(new TransactionRequest(
+                        account.getAccountNumber(),
+                        request.getInitialDeposit(),
+                        "Initial Deposit - Account Opening"
+                ));
+            }
+        } catch (Exception e) {
+            log.warn("Could not record initial deposit transaction: {}", e.getMessage());
+        }
+
         return map(account);
     }
 
     @Override
     public AccountResponse getAccount(String accountNumber) {
         return map(find(accountNumber));
+    }
+
+    @Override
+    public List<AccountResponse> getAccountsByUserId(Long userId) {
+        return repo.findByUserId(userId).stream()
+                .map(this::map)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -85,6 +112,7 @@ public class AccountServiceImpl implements AccountService {
                 .branchName(acc.getBranchName())
                 .currency(acc.getCurrency())
                 .nomineeName(acc.getNomineeName())
+                .nomineeRelation(acc.getNomineeRelation())
                 .status(acc.getStatus())
                 .userId(acc.getUserId())
                 .build();

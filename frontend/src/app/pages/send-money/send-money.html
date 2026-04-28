@@ -1,1 +1,131 @@
-<p>send-money works!</p>
+<div class="dashboard-container">
+  <div class="header-section">
+    <h1>Send Money</h1>
+    <p>Transfer funds securely to your linked beneficiaries or any account number.</p>
+  </div>
+
+  <div *ngIf="isLoading && accounts.length === 0" class="loading-state">
+    <i class="fas fa-spinner fa-spin"></i> Loading your accounts and beneficiaries...
+  </div>
+
+  <div class="main-content" *ngIf="!isLoading || accounts.length > 0">
+    <div class="card transfer-card">
+      <form [formGroup]="transferForm" (ngSubmit)="onSubmit()">
+        
+        <!-- Alerts -->
+        <div *ngIf="errorMessage" class="alert alert-error">
+          <i class="fas fa-exclamation-circle"></i> {{ errorMessage }}
+        </div>
+        <div *ngIf="successMessage" class="alert alert-success">
+          <i class="fas fa-check-circle"></i> {{ successMessage }}
+        </div>
+
+        <div class="form-grid">
+          <!-- Left Column: Source & Amount -->
+          <div class="form-column">
+            <div class="form-group">
+              <label for="fromAccount">Select Your Account</label>
+              <div class="select-wrapper">
+                <select id="fromAccount" formControlName="fromAccount" class="form-control">
+                  <option value="" disabled>Choose an account</option>
+                  <option *ngFor="let acc of accounts" [value]="acc.accountNumber">
+                    {{ acc.accountType }} - {{ acc.accountNumber }} (₹{{ acc.balance | number:'1.2-2' }})
+                  </option>
+                </select>
+                <i class="fas fa-chevron-down"></i>
+              </div>
+              <div *ngIf="transferForm.get('fromAccount')?.touched && transferForm.get('fromAccount')?.invalid" class="error-text">
+                Source account is required.
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="selectedBeneficiary">Quick Select Beneficiary</label>
+              <div class="select-wrapper">
+                <select id="selectedBeneficiary" formControlName="selectedBeneficiary" class="form-control">
+                  <option [ngValue]="null">Select a beneficiary to auto-fill</option>
+                  <option *ngFor="let b of beneficiaries" [ngValue]="b">
+                    {{ b.name }} ({{ b.accountNumber }})
+                  </option>
+                </select>
+                <i class="fas fa-chevron-down"></i>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="amount">Amount (INR)</label>
+              <div class="input-with-icon">
+                <span class="currency-symbol">₹</span>
+                <input type="number" id="amount" formControlName="amount" placeholder="0.00" class="form-control">
+              </div>
+              <div *ngIf="transferForm.get('amount')?.touched && transferForm.get('amount')?.invalid" class="error-text">
+                Please enter a valid amount (min ₹1).
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="description">Remark (Optional)</label>
+              <input type="text" id="description" formControlName="description" placeholder="What's this for?" class="form-control">
+            </div>
+          </div>
+
+          <!-- Right Column: Destination & Security -->
+          <div class="form-column">
+            <div class="form-group">
+              <label for="toAccount">Recipient Account Number</label>
+              <input type="text" id="toAccount" formControlName="toAccount" placeholder="Enter recipient's account number" class="form-control">
+              <div *ngIf="transferForm.get('toAccount')?.touched && transferForm.get('toAccount')?.invalid" class="error-text">
+                Recipient account number is required.
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="pin">Transaction PIN</label>
+              <div class="input-with-icon">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="pin" formControlName="pin" placeholder="Enter security PIN" class="form-control" maxlength="6">
+              </div>
+              <div *ngIf="transferForm.get('pin')?.touched && transferForm.get('pin')?.invalid" class="error-text">
+                Valid transaction PIN is required (4-6 digits).
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" (click)="router.navigate(['/dashboard'])">Cancel</button>
+          <button type="submit" class="btn btn-primary" [disabled]="isLoading">
+            <span *ngIf="!isLoading">Send Money Now</span>
+            <span *ngIf="isLoading"><i class="fas fa-spinner fa-spin"></i> Processing...</span>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Quick Info Card -->
+    <div class="info-sidebar">
+      <div class="card info-card">
+        <h3>Transfer Tips</h3>
+        <ul>
+          <li><i class="fas fa-shield-alt"></i> Always verify the recipient's account number before sending.</li>
+          <li><i class="fas fa-clock"></i> Transfers within the bank are usually instantaneous.</li>
+          <li><i class="fas fa-info-circle"></i> Keep your transaction PIN secret for security.</li>
+        </ul>
+      </div>
+      
+      <div class="card balance-summary" *ngIf="getSelectedAccount()">
+        <h3>Estimated Balance</h3>
+        <div class="balance-item">
+          <span>Current:</span>
+          <span>₹{{ getSelectedAccount().balance | number:'1.2-2' }}</span>
+        </div>
+        <div class="balance-item after">
+          <span>After Transfer:</span>
+          <span [class.text-danger]="(getSelectedAccount().balance || 0) < (transferForm.get('amount')?.value || 0)">
+            ₹{{ ((getSelectedAccount().balance || 0) - (transferForm.get('amount')?.value || 0)) | number:'1.2-2' }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

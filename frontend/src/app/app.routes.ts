@@ -47,7 +47,7 @@ export const routes: Routes = [
   children: [
     { path: 'transactions', component: Transactions },
     { path: 'accounts', component: Accounts },
-  {path:'payments', component: Payments},
+    { path: 'payments', component: SendMoney },
     { path: 'profile', component: Profile },
     { path: 'settings', component: Settings },
     { path: 'create-account', component: CreateAccount, data: { title: 'Create Account' } },

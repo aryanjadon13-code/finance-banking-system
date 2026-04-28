@@ -31,9 +31,7 @@
   width: 50%;
   background: url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab') no-repeat center/cover;
   position: relative;
-
-  border-radius: 0 25px 25px 0
-  
+  border-radius: 0 25px 25px 0;
 }
 
 .left h2 {
@@ -60,20 +58,19 @@ input {
   color: rgb(111, 111, 213);
 }
 
-
 /* CHECKBOX */
 .remember {
   display: flex;
   align-items: center;
   gap: 6px;
   margin-top: 8px;
-
 }
+
 .remember input[type="checkbox"] {
   width: 14px;
   height: 14px;
   margin: 0;
-  accent-color: #4b6f56; /* green color */
+  accent-color: #4b6f56;
   cursor: pointer;
 }
 
@@ -82,17 +79,34 @@ input {
   cursor: pointer;
 }
 
+/* LOGIN & SIGNUP BUTTONS */
+.login-btn, .signup-btn {
+  width: 48%;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+  display: inline-block;
+}
 
-/* LOGIN BUTTON */
 .login-btn {
-  width: 100%;
-  padding: 10px;
   background: #4b6f56;
   color: white;
-
   border: none;
   margin-top: 15px;
-  border-radius: 5px;
+  margin-right: 4%;
+}
+
+.signup-btn {
+  background: transparent;
+  color: #4b6f56;
+  border: 1px solid #4b6f56;
+  margin-top: 15px;
+}
+
+.signup-btn:hover {
+  background: rgba(75, 111, 86, 0.1);
 }
 
 /* DIVIDER */
@@ -109,9 +123,6 @@ input {
   border-radius: 5px;
   border: 1px solid #ccc;
 }
-
-/* RIGHT SIDE */
-
 
 /* DARK OVERLAY */
 .right::before {
@@ -132,7 +143,7 @@ input {
   width: 80%;
 }
 
-/* SIGN UP BUTTON */
+/* OVERLAY BUTTON */
 .overlay button {
   margin-top: 20px;
   padding: 10px 25px;
@@ -145,35 +156,37 @@ input {
 }
 
 .top-logo {
-  position: fixed;   /* 🔥 change this */
+  position: fixed;
   top: 20px;
   left: 20px;
-  z-index: 1000;     /* keeps it above everything */
+  z-index: 1000;
 }
 
 .top-logo img {
   width: 60px;
 }
 
-
-.left-heading  {
+.left-heading {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-
+/* RESPONSIVE */
 @media (max-width: 768px) {
-  .right{
+  .right {
     display: none;
   }
-  .left{
+  .left {
     width: 100%;
-    padding: 20px;
+    padding: 30px 20px;
   }
-
   .card {
     width: 90vw;
   }
-  
+  .login-btn, .signup-btn {
+    width: 100%;
+    margin-right: 0;
+    margin-top: 10px;
+  }
 }

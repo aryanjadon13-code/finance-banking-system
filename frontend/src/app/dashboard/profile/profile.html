@@ -1,145 +1,150 @@
-<div class="container">
-  <div class="profile-header">
- 
-     <div></div>
-  <button class="save-btn" (click)="saveChanges()">
-    Save Changes
-  </button>
-</div>
+<div class="dashboard-container">
+  <div *ngIf="user">
+  <div class="page-header">
+    <div class="header-text">
+      <h2>Account Settings</h2>
+      <p>View and manage your personal profile and account security.</p>
+    </div>
+    <button class="action-btn" (click)="showComingSoon()">
+      <i class="fas fa-edit"></i> Edit Profile
+    </button>
+  </div>
+
   <div class="profile-layout">
-
-  
-
-    <!-- LEFT SIDE -->
-    <div class="left-section">
-
-      <!-- PROFILE CARD -->
+    <!-- LEFT COLUMN: Profile Overview -->
+    <div class="overview-section">
       <div class="profile-card">
-
-        <div class="avatar-wrapper">
+        <div class="avatar-container">
           <div class="avatar">
-            {{ user.name.charAt(0) }}{{ user.name.split(' ')[1]?.charAt(0) }}
+            {{ user.initials }}
           </div>
-
-          <div class="edit-icon" (click)="editProfileImage()">
-            <i class="fas fa-pencil-alt"></i>
-          </div>
+          <div class="status-badge"></div>
         </div>
-
+        
         <h2>{{ user.name }}</h2>
         <p class="email">{{ user.email }}</p>
-
-        <div class="tags">
-          <span class="kyc">✔ KYC {{ user.account.kyc }}</span>
-          <span class="premium">{{ user.account.type }}</span>
+        
+        <div class="badge-container">
+          <span class="badge verified">Verified User</span>
+          <span class="badge kyc">KYC Done</span>
         </div>
-
       </div>
 
-      <!-- ACCOUNT STATUS -->
-      <div class="status-card">
-
-        <h3>ACCOUNT STATUS</h3>
-
-        <div class="status-item">
-          <span>Member Since</span>
-          <p>{{ user.account.memberSince }}</p>
+      <div class="summary-card">
+        <h3>System Details</h3>
+        <div class="summary-item">
+          <span class="label">Member Since</span>
+          <span class="value">{{ user.memberSince }}</span>
         </div>
-
-        <div class="status-item">
-          <span>Account Type</span>
-          <p class="highlight">{{ user.account.type }}</p>
+        <div class="summary-item">
+          <span class="label">Total Accounts</span>
+          <span class="value">{{ accounts.length }} Linked</span>
         </div>
-
-        <div class="status-item">
-          <span>KYC Status</span>
-          <p class="verified">✔ {{ user.account.kyc }}</p>
+        <div class="summary-item" *ngIf="accounts.length > 0">
+          <span class="label">Primary Nominee</span>
+          <span class="value">{{ accounts[0].nomineeName }}</span>
         </div>
-
-        <div class="status-item">
-          <span>Linked Accounts</span>
-          <p>{{ user.account.linkedAccounts }} Active</p>
-        </div>
-
       </div>
-
     </div>
 
-    <!-- RIGHT SIDE -->
-    <div class="right-section">
-
+    <!-- RIGHT COLUMN: Personal Details -->
+    <div class="details-section">
       <div class="info-card">
+        <h3>Personal Information</h3>
+        
+        <div class="info-grid">
+          <div class="info-item">
+            <div class="icon-box"><i class="fas fa-user"></i></div>
+            <div class="content">
+              <label>Full Name</label>
+              <p>{{ user.name }}</p>
+            </div>
+          </div>
 
-  <h3>PERSONAL INFORMATION</h3>
+          <div class="info-item">
+            <div class="icon-box"><i class="fas fa-envelope"></i></div>
+            <div class="content">
+              <label>Email Address</label>
+              <p>{{ user.email }}</p>
+            </div>
+          </div>
 
-  <div class="info-row">
-    <div class="left">
-      <i class="fas fa-user"></i>
-      <div>
-        <span>Full Name</span>
-        <p>{{ user.name }}</p>
+          <div class="info-item">
+            <div class="icon-box"><i class="fas fa-phone"></i></div>
+            <div class="content">
+              <label>Phone Number</label>
+              <p>{{ user.phoneNumber || 'Not Linked' }}</p>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <div class="icon-box"><i class="fas fa-id-card"></i></div>
+            <div class="content">
+              <label>User ID</label>
+              <p>USER-{{ user.id }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-card" *ngIf="accounts.length > 0">
+        <h3>Nominee & Security</h3>
+        <div class="info-grid">
+          <div class="info-item">
+            <div class="icon-box"><i class="fas fa-user-shield"></i></div>
+            <div class="content">
+              <label>Nominee Name</label>
+              <p>{{ accounts[0].nomineeName }}</p>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <div class="icon-box"><i class="fas fa-users"></i></div>
+            <div class="content">
+              <label>Relation</label>
+              <p>{{ accounts[0].nomineeRelation }}</p>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <div class="icon-box"><i class="fas fa-clock"></i></div>
+            <div class="content">
+              <label>Last Login</label>
+              <p>Just Now</p>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <div class="icon-box"><i class="fas fa-map-marker-alt"></i></div>
+            <div class="content">
+              <label>Branch</label>
+              <p>Corporate Office</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <button>Edit</button>
   </div>
-
-  <div class="info-row">
-    <div class="left">
-      <i class="fas fa-envelope"></i>
-      <div>
-        <span>Email Address</span>
-        <p>{{ user.email }}</p>
-      </div>
-    </div>
-    <button>Edit</button>
   </div>
-
-  <div class="info-row">
-    <div class="left">
-      <i class="fas fa-phone"></i>
-      <div>
-        <span>Mobile Number</span>
-        <p>{{ user.phone }}</p>
-      </div>
-    </div>
-    <button>Edit</button>
-  </div>
-
-  <!-- STATIC -->
-  <div class="info-row">
-    <div class="left">
-      <i class="fas fa-calendar"></i>
-      <div>
-        <span>Date of Birth</span>
-        <p>15 March 1995</p>
-      </div>
-    </div>
-    <button>Edit</button>
-  </div>
-
-  
-  <!-- NOMINEE -->
-  <div class="info-row">
-    <div class="left">
-      <i class="fas fa-user-shield"></i>
-      <div>
-        <span>Nominee</span>
-        <p>{{ user.nominee.name }} ({{ user.nominee.relation }})</p>
-      </div>
-    </div>
-    <button>Edit</button>
-  </div>
-
-  <div class="save-container">
-  <button class="save-btn full-width" (click)="saveChanges()">
-    Save Changes
-  </button>
 </div>
 
+<div class="loading-state" *ngIf="isLoading">
+  <div class="spinner"></div>
+  <p>Fetching your profile details...</p>
 </div>
 
+<div class="error-state" *ngIf="!isLoading && !user">
+  <div class="error-card">
+    <i class="fas fa-exclamation-triangle"></i>
+    <h3>Unable to Load Profile</h3>
+    <p>We couldn't fetch your profile data. Your session might have expired.</p>
+    <div class="error-actions">
+      <button class="retry-btn" (click)="ngOnInit()">
+        <i class="fas fa-sync"></i> Retry
+      </button>
+      <button class="login-btn" (click)="auth.clear(); router.navigate(['/login'])">
+        Log Out & Re-login
+      </button>
     </div>
-
   </div>
-
 </div>

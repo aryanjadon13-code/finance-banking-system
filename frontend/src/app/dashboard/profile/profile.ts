@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { UserService } from '../../services/user-service';
+import { AccountService } from '../../services/account.service';
+import { Auth } from '../../services/auth';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -11,42 +14,74 @@ import { CommonModule } from '@angular/common';
 })
 export class Profile implements OnInit {
 
-    ngOnInit() {
-    console.log("Profile loaded");
+  user: any = null;
+  accounts: any[] = [];
+  isLoading = true;
+
+  constructor(
+    public userService: UserService,
+    public accountService: AccountService,
+    public auth: Auth,
+    private cdRef: ChangeDetectorRef,
+    public router: Router
+  ) {}
+
+  ngOnInit() {
+    const userId = this.auth.getUserId();
+    if (!userId) {
+      this.router.navigate(['/login']);
+      return;
+    }
+    this.loadProfileData(userId);
   }
-  
 
-  //  This will come from API later
-  user = {
-  name: 'Priya Sharma',
-  email: 'priya.sharma@email.com',
-  phone: '+91 98765 43210',
+  loadProfileData(userId: string) {
+    this.isLoading = true;
 
-  nominee: {
-    name: 'Ramesh Sharma',
-    relation: 'Father'
-  },
+    // Load User Details
+    this.userService.getUserById(userId).subscribe({
+      next: (userData) => {
+        this.user = {
+          ...userData,
+          memberSince: this.formatDate(userData.createdAt),
+          initials: this.getInitials(userData.name)
+        };
+        this.isLoading = false;
+        this.cdRef.detectChanges();
+      },
+      error: (err) => {
+        console.error('Failed to load user profile', err);
+        this.isLoading = false;
+        this.cdRef.detectChanges();
+      }
+    });
 
-  account: {
-    memberSince: 'January 2020',
-    type: 'Premium',
-    kyc: 'Verified',
-    linkedAccounts: 3
+    // Load Accounts to get nominee
+    this.accountService.getAccountsByUserId(userId).subscribe({
+      next: (accounts) => {
+        this.accounts = accounts;
+        this.cdRef.detectChanges();
+      },
+      error: (err) => console.error('Failed to load accounts for profile', err)
+    });
   }
-};
 
-editProfileImage() {
-  console.log("Edit profile image clicked");
+  getInitials(name: string): string {
+    if (!name) return '??';
+    const parts = name.split(' ');
+    if (parts.length > 1) {
+      return (parts[0].charAt(0) + parts[1].charAt(0)).toUpperCase();
+    }
+    return name.charAt(0).toUpperCase();
+  }
 
-  // Later:
-  // open file picker / upload image / call API
-}
+  formatDate(dateString: string): string {
+    if (!dateString) return 'N/A';
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-IN', { year: 'numeric', month: 'long' });
+  }
 
-saveChanges() {
-  console.log("Saving user data:", this.user);
-
-  
-  
- 
-}
+  showComingSoon() {
+    alert('This feature is coming soon! 🚧');
+  }
 }

@@ -59,4 +59,15 @@ public class UserService {
         );
     }
 
+    public UserResponse getUserById(Long id) {
+        UserEntity user = userRepo.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        return new UserResponse(
+                user.getId(),
+                user.getName(),
+                user.getEmail(),
+                user.getPhoneNumber(),
+                user.getRole(),
+                user.getCreatedAt()
+        );
+    }
 }

@@ -1,162 +1,125 @@
-<div class="accounts-page">
+<div class="dashboard-container">
 
   <!-- Header -->
   <div class="page-header">
-    <div>
-     
+    <div class="header-text">
+      <h2>Account Overview</h2>
+      <p>Manage and monitor all your linked accounts in one place.</p>
     </div>
-
     <button routerLink="/dashboard/create-account" class="link-btn">+ Create Account</button>
   </div>
 
   <!-- Summary Card -->
   <div class="summary-card">
-
     <div class="net-worth">
       <p>Total Net Worth</p>
-      <h2>₹3,45,800</h2>
-      <span class="growth">+ ₹40,260 this month</span>
+      <h2>₹{{ totalBalance | number:'1.2-2' }}</h2>
+      <span class="growth" [class.green]="totalIncome > totalExpenses">
+        {{ totalIncome > totalExpenses ? '+' : '' }} ₹{{ (totalIncome - totalExpenses) | number:'1.2-2' }} this month
+      </span>
     </div>
 
     <div class="stats">
       <div class="stat-box green">
-        <p>Total Assets</p>
-        <h4>₹3,45,800</h4>
+        <p>Total Income</p>
+        <h4>₹{{ totalIncome | number:'1.2-2' }}</h4>
       </div>
 
       <div class="stat-box red">
-        <p>Total Debts</p>
-        <h4>₹18,240</h4>
+        <p>Total Expenses</p>
+        <h4>₹{{ totalExpenses | number:'1.2-2' }}</h4>
       </div>
 
       <div class="stat-box blue">
-        <p>Accounts</p>
-        <h4>3 Active</h4>
+        <p>Active Accounts</p>
+        <h4>{{ accounts.length }} Active</h4>
       </div>
     </div>
-    
-
   </div>
+
   <!-- Accounts Section -->
-<div class="accounts-section">
-
-  <h3>Your Accounts</h3>
-
-  <div class="accounts-grid">
-
-    <!-- Card 1 -->
-    <div class="account-card">
-      <p class="tag">Primary</p>
-      <h4>Savings Account</h4>
-      <span class="sub-text">State Bank •••• 4821</span>
-
-      <h2>₹2,18,600</h2>
-
-      <div class="actions">
-        <button>Send Money</button>
-        <button>Statement</button>
-        <button>Details</button>
-      </div>
+  <div class="accounts-section">
+    <div class="section-header">
+      <h3>Your Accounts</h3>
+      <span *ngIf="isLoading"><i class="fas fa-spinner fa-spin"></i> Refreshing...</span>
     </div>
 
-    <!-- Card 2 -->
-    <div class="account-card">
-      <p class="tag">Business</p>
-      <h4>Current Account</h4>
-      <span class="sub-text">HDFC Bank •••• 9034</span>
-
-      <h2>₹27,200</h2>
-
-      <div class="actions">
-        <button>Send Money</button>
-        <button>Statement</button>
-        <button>Details</button>
-      </div>
+    <div *ngIf="accounts.length === 0 && !isLoading" class="empty-accounts">
+      <i class="fas fa-university" style="font-size: 3rem; color: #ccc; margin-bottom: 1rem;"></i>
+      <p>No accounts found. Create one to get started!</p>
+      <button routerLink="/dashboard/create-account" class="btn-create-inline">Create Account</button>
     </div>
 
-    <!-- Card 3 -->
-    <div class="account-card highlight">
-      <p class="tag">Fixed Deposit</p>
-      <h4>FD Account</h4>
-      <span class="sub-text">ICICI Bank •••• 1190</span>
+    <div class="accounts-grid" *ngIf="accounts.length > 0">
+      <div class="account-card" *ngFor="let acc of accounts" [ngClass]="getAccountTypeClass(acc.accountType)">
+        <div class="card-top">
+          <p class="tag">{{ acc.accountType | titlecase }}</p>
+          <i [class]="getAccountIcon(acc.accountType)"></i>
+        </div>
+        <h4>{{ acc.accountType === 'SAVINGS' ? 'Savings Account' : acc.accountType === 'CURRENT' ? 'Current Account' : 'FD Account' }}</h4>
+        <span class="sub-text">{{ acc.currency }} •••• {{ acc.accountNumber.slice(-4) }}</span>
 
-      <h2>₹1,00,000</h2>
+        <h2>₹{{ acc.balance | number:'1.2-2' }}</h2>
 
-      <div class="actions">
-        <button>Details</button>
+        <div class="actions">
+          <button (click)="router.navigate(['/dashboard/payments'])">Send Money</button>
+          <button (click)="showComingSoon('Statement')">Statement</button>
+          <button (click)="showComingSoon('Details')">Details</button>
+        </div>
       </div>
     </div>
-
   </div>
 
-</div>
-<div class="bottom-section">
+  <div class="bottom-section" *ngIf="accounts.length > 0">
+    <!-- LEFT: Breakdown -->
+    <div class="breakdown">
+      <h3>Balance Breakdown</h3>
+      <p class="sub">Distribution across your accounts</p>
 
-  <!-- LEFT -->
-  <div class="breakdown">
+      <div class="bar" *ngFor="let acc of accounts">
+        <div class="bar-info">
+          <span>{{ acc.accountType | titlecase }}</span>
+          <span>{{ (acc.balance / totalBalance * 100) | number:'1.0-0' }}%</span>
+        </div>
+        <div class="progress">
+          <div class="fill" 
+               [ngClass]="getAccountTypeClass(acc.accountType)" 
+               [style.width.%]="acc.balance / totalBalance * 100"></div>
+        </div>
+      </div>
 
-    <h3>Balance Breakdown</h3>
-    <p class="sub">Distribution across accounts</p>
-
-    <!-- Progress bars -->
-    <div class="bar">
-      <span>Savings A/C</span>
-      <div class="progress">
-        <div class="fill green" style="width: 60%"></div>
+      <div class="extra-stats">
+        <p>Monthly Income <span class="green">+₹{{ totalIncome | number:'1.2-2' }}</span></p>
+        <p>Monthly Expenses <span class="red">-₹{{ totalExpenses | number:'1.2-2' }}</span></p>
+        <p>Net Savings <span class="green">₹{{ (totalIncome - totalExpenses) | number:'1.2-2' }}</span></p>
       </div>
     </div>
 
-    <div class="bar">
-      <span>Fixed Deposit</span>
-      <div class="progress">
-        <div class="fill yellow" style="width: 25%"></div>
+    <!-- RIGHT: Activity -->
+    <div class="activity">
+      <h3>Recent Account Activity</h3>
+      
+      <div *ngIf="transactions.length === 0" class="empty-activity">
+        <p>No recent activity</p>
       </div>
-    </div>
 
-    <div class="bar">
-      <span>Current A/C</span>
-      <div class="progress">
-        <div class="fill blue" style="width: 15%"></div>
+      <div class="activity-item" *ngFor="let t of transactions">
+        <div class="activity-info">
+          <p>{{ t.name }}</p>
+          <span>{{ t.date }}</span>
+        </div>
+        <span [class.green]="t.type === 'credit'" [class.red]="t.type === 'debit'">
+          {{ t.amount }}
+        </span>
       </div>
+      
+      <button class="view-all-btn" routerLink="/dashboard/transactions" *ngIf="transactions.length > 0">View All Activity</button>
     </div>
-
-    <!-- Stats -->
-    <div class="extra-stats">
-      <p>Monthly Income <span class="green">+₹45,000</span></p>
-      <p>Monthly Expenses <span class="red">-₹18,240</span></p>
-      <p>Net Savings <span class="green">+₹40,827</span></p>
-    </div>
-
   </div>
 
-  <!-- RIGHT -->
-  <div class="activity">
-
-    <h3>Recent Account Activity</h3>
-
-    <div class="activity-item">
-      <p>Salary → Savings A/C</p>
-      <span class="green">+₹45,000</span>
-    </div>
-
-    <div class="activity-item">
-      <p>Amazon → Savings A/C</p>
-      <span class="red">-₹2,340</span>
-    </div>
-
-    <div class="activity-item">
-      <p>Client Payment → Current</p>
-      <span class="green">+₹12,000</span>
-    </div>
-
-    <div class="activity-item">
-      <p>FD Interest</p>
-      <span class="green">+₹567</span>
-    </div>
-
+  <!-- Toast Notification -->
+  <div class="toast" *ngIf="showToast">
+    {{ comingSoonMessage }}
   </div>
-  
-
-</div>
 
 </div>

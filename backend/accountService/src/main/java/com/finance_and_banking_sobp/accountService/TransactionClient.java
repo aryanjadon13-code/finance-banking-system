@@ -12,4 +12,7 @@ public interface TransactionClient {
 
     @PostMapping("/api/transactions/deposit")
     void deposit(TransactionRequest request);
+
+    @PostMapping("/api/transactions/record")
+    void record(TransactionRequest request);
 }

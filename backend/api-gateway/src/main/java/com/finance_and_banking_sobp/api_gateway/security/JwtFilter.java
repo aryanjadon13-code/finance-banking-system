@@ -42,6 +42,8 @@ public class JwtFilter implements GlobalFilter {
                 .getHeaders()
                 .getFirst(HttpHeaders.AUTHORIZATION);
 
+        System.out.println("Auth Header: " + (authHeader != null ? "Present" : "Missing"));
+
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             return unauthorized(exchange, "Missing or invalid Authorization header");
         }

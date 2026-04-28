@@ -24,6 +24,11 @@ public class AccountController {
         return ResponseEntity.ok(service.getAccount(accountNumber));
     }
 
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<?> getAccountsByUserId(@PathVariable Long userId) {
+        return ResponseEntity.ok(service.getAccountsByUserId(userId));
+    }
+
     @PutMapping("/{accountNumber}/balance")
     public void updateBalance(@PathVariable String accountNumber,
                               @RequestParam Double amount) {

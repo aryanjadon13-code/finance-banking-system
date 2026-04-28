@@ -15,8 +15,8 @@ import java.util.Map;
 @AllArgsConstructor
 public class UserController {
 
-  private UserService userService;
-  private OtpService otpService;
+    private UserService userService;
+    private OtpService otpService;
 
     @PostMapping("/register")
     public UserResponse register(@Valid @RequestBody RegisterRequest request) {
@@ -33,8 +33,6 @@ public class UserController {
         return "secured API working";
     }
 
-//    otp controllers
-
     @PostMapping("/forgot-password")
     public ResponseEntity<Map<String, String>> forgotPassword(@Valid @RequestBody ForgotPasswordRequest request) {
         return otpService.forgotPassword(request);
@@ -48,5 +46,10 @@ public class UserController {
     @PostMapping("/reset-password")
     public ResponseEntity<?> resetPassword(@RequestBody ResetPasswordRequest request) {
         return otpService.resetPassword(request);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UserResponse> getUserById(@PathVariable Long id) {
+        return ResponseEntity.ok(userService.getUserById(id));
     }
 }
